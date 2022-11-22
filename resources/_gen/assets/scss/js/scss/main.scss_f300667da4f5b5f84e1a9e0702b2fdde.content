@@ -1,0 +1,31 @@
+body {
+  background-color: #222222;
+  color: #ffffff; }
+
+.secondary {
+  color: "orange";
+  background-color: "white"; }
+
+.container {
+  text-align: center; }
+
+.ascii {
+  font-family: monospace;
+  white-space: pre; }
+
+.filled {
+  width: "500px";
+  height: "100%"; }
+
+.hidden {
+  display: none; }
+
+.footer {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  background-color: white;
+  color: black; }
+
+.buffer {
+  height: 300px; }
