@@ -5,12 +5,10 @@ draft: false
 tags: ["engineering"]
 ---
 
-A hello world from blog.andor.us
-
-<!--more-->
-
 Hello world. This is a fun little side project I've decided to cook up on my
 spare time.
+
+<!--more-->
 
 ### Blog Engineering Details
 
