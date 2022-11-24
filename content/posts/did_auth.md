@@ -12,6 +12,22 @@ cryptographically prove that they are associated with a DID and DID Description.
 
 <!--more -->
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
+**Table of Contents**
+
+- [What is DID Auth?](#what-is-did-auth)
+- [Putting it together](#putting-it-together)
+- [Preparing the Challenge](#preparing-the-challenge)
+- [Preparing Response](#preparing-response)
+- [Response Validation](#response-validation)
+- [Extending the concept with Verifiable Credentials](#extending-the-concept-with-verifiable-credentials)
+- [Things Not Covered](#things-not-covered)
+- [Additional Resources](#additional-resources)
+- [Code](#code)
+
+<!-- markdown-toc end -->
+
 DID auth is more a concept than an implementation, with a widely known
 implementations hanging around today, such as:
 
@@ -25,7 +41,8 @@ up putting together a hello world implementation of DID Auth.
 
 The best reference I found was
 [here](https://w3c-ccg.github.io/vp-request-spec/). This tutorial will go
-through the basics and there is associated code alongside it.
+through the basics and there is associated code alongside it. Another great
+reference was [this video](https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/).
 
 #### Putting it together
 
@@ -86,7 +103,6 @@ Let's assume the basic flow, challenge and response.
 sequenceDiagram
     participant Holder
     participant Verifier
-    Holder->>Verifier: Sends DID in JWS
     Verifier->>Holder: DID-Auth Challenge
     Note right of Holder: Holder prepares response
     Holder->>Verifier: DID-Auth Response
@@ -121,12 +137,16 @@ Example Challenge
 }
 ```
 
-Here we generate a `challenge` ( i find it easier to think of a nonce ), which a
-one time seed used to help sign.
+There are few really interesting things here. Firstly, let us notice that in
+this challenge, the DID of the holder is not present. That may seem unintuitive,
+because you would expect that to prove you own the did, you would need to also
+share the did value, but that is not required. It also does not necessarily show
+that the relying party owns a DID frm their! Another curveball here.
 
-Learn more about the challenge format [here](https://w3c-ccg.github.io/vp-request-spec/#the-did-authentication-query-format)
+Second: we generate a `challenge` ( i find it easier to think of a nonce ), which a
+one time seed used to help sign. Learn more about the challenge format [here](https://w3c-ccg.github.io/vp-request-spec/#the-did-authentication-query-format)
 
-You might also notice a `domain` field. In practice, this field needs to be
+Third might also notice a `domain` field. According to the w3c, it needs to be
 checked to validate ownership of the domain.
 
 ```blockquote
@@ -136,13 +156,18 @@ this is not done, a dishonest verifier could then replay the message to a
 domain that is not their own.
 ```
 
-To follow up: Relying on a domain for verification seems wrong. I will need to
-review this some more.
+I'm not sure I buy this yet as the right way to do it. I'll need to follow up
+more. Relying on a domain for verification seems wrong.
 
 #### Preparing Response
 
-The response prepared by the holder must be in the form of a verifiable
-presentation in the following form below:
+A response is what the holder prepares to the verifier to show they own the did.
+The response has a few critical features to it. Firstly, it MUST be linked to
+the challenge ( using the Nonce ) and secondly it MUST contain proof of control
+of the DID of the holder.
+
+The w3c specs demonstrate the response in a verifiable presentation of the
+following form below:
 
 ```json
 {
@@ -162,11 +187,40 @@ presentation in the following form below:
 }
 ```
 
-The proof is generated
+In the code sample shared, I used JSONWebSignatures to verify and create the proofs.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "holder": "did:key:z6Mks7tCEjXLYG1eZPxeLriwV2fserei72A2KUAMRb1nff7G",
+  "type": "VerifiablePresentation",
+  "proof": {
+    "type": "JsonWebSignature2020",
+    "created": "2022-11-24T22:44:33Z",
+    "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..QJDhf5cwCzuPOzOIebUQOopr6dEUx0QvwPYKKZ73NMDnIeQrM_5QFHJ8bmZEWtSNtY4z5JBP5eT2zH_FOnzHBw",
+    "proofPurpose": "DIDAuthentication",
+    "verificationMethod": "603621dc-c251-466d-9b66-e2e31eae40ab"
+  }
+}
+```
+
+The public key is leveraged to validate the proof. You can see a test, where a
+bad actor tries to pretend to own the key [here](https://github.com/benri-io/did_auth_demo/blob/master/did_auth_test.go#L95-L118)
 
 #### Response Validation
 
-#### Extending the concept with Verifiable Credentials
+#### Things Not Covered
+
+- I consider transports an implementation detail, and out of scope for this
+  document. Maybe in a future one.
+- The details of the cryptographic proofs and how they work are a little too low
+  level for this article.
+- I did not go into practical implementations of DID Auth. This was focused
+  mostly on being super clear.
+- Data formats such as JWT, JSON-LD, HTTP Signatures, and JWS
 
 #### Additional Resources
 
