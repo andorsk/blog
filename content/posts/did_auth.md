@@ -105,7 +105,7 @@ cycle in which a relying party authenticates the DID of an identity owner.
 During this cycle, an identity owner demonstrates control of their DID through
 authentication-proof mechanisms.
 
-Ex. 1 Example Challenge
+Example Challenge
 
 ```json
 {
@@ -125,6 +125,19 @@ Here we generate a `challenge` ( i find it easier to think of a nonce ), which a
 one time seed used to help sign.
 
 Learn more about the challenge format [here](https://w3c-ccg.github.io/vp-request-spec/#the-did-authentication-query-format)
+
+You might also notice a `domain` field. In practice, this field needs to be
+checked to validate ownership of the domain.
+
+```blockquote
+It is vital that a holder implementation check the domain provided by the
+verifier against the domain used for the current channel of communication. If
+this is not done, a dishonest verifier could then replay the message to a
+domain that is not their own.
+```
+
+To follow up: Relying on a domain for verification seems wrong. I will need to
+review this some more.
 
 #### Preparing Response
 
