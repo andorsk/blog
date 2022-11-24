@@ -1,7 +1,7 @@
 ---
 title: "Verifiable Credentials and the @context debate"
 date: 2022-11-24T16:37:18+05:30
-draft: false
+draft: true
 tags: ["vc", "identity"]
 ---
 
