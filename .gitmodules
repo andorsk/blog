@@ -1,0 +1,3 @@
+[submodule "themes/emacsTheme"]
+	path = themes/emacsTheme
+	url = git@github.com:andorsk/emacsTheme.git
