@@ -1,8 +1,10 @@
 ---
-itle: "DID Auth"
+title: "DID Auth"
 date: 2022-11-24T22:04:55+05:30
 draft: false
 tags: ["identity"]
+keywords: ["did", "identity", "authentication"]
+description: "a brief walkthrough on the basics of did auth"
 ---
 
 #### What is DID Auth?
@@ -211,6 +213,8 @@ The public key is leveraged to validate the proof. You can see a test, where a
 bad actor tries to pretend to own the key [here](https://github.com/benri-io/did_auth_demo/blob/master/did_auth_test.go#L95-L118)
 
 #### Response Validation
+
+Validating the proof involves using a verifying algorithm.
 
 #### Things Not Covered
 

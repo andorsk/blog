@@ -182,6 +182,9 @@ h3:before {
   stroke-color: black !important;
   stroke-width: 2px !important; }
 
+.mermaid .cluster rect {
+  fill: white !important; }
+
 blockquote {
   border-left: 1px solid #ccc;
   margin: 1.5em 10px;
