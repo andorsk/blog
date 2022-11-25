@@ -1,7 +1,7 @@
 baseURL = "https://andorsk.github.io/blog/"
 languageCode = "en-us"
 title = "&&||'s Engineering Blog"
-url = "https://andorsk.github.com/blog/"
+url = "https://andorsk.github.io/blog/"
 theme = "emacsTheme"
 
 [Author]
