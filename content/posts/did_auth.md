@@ -2,7 +2,7 @@
 title: "DID Auth"
 date: 2022-11-24T22:04:55+05:30
 draft: false
-tags: ["identity"]
+tags: ["identity", "did", "authentication"]
 keywords: ["did", "identity", "authentication"]
 description: "a brief walkthrough on the basics of did auth"
 ---
