@@ -1,300 +1,120 @@
-<!doctype html><html><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=stylesheet type=text/css href=/css/bootstrap.min.css>
-<link rel=stylesheet type=text/css href=/css/style.css>
-<title>&&||'s Engineering Blog | DID Auth</title>
-<link rel=stylesheet href=/js/scss/main.css>
-</head>
-<body><button type=button onclick=toggleHelpModal() class="btn btn-link btn-block px-md-3 position-absolute top-0 end-0 no-decorate" data-bs-toggle=modal data-bs-target=#helpModal>
-Help
-</button>
-<div class=modal id=helpModal tabindex=-1 role=dialog aria-labelledby="Help Dialog" aria-hidden=true>
-<div class=modal-dialog role=document>
-<div class=modal-content>
-<div class=modal-header>
-<h5 class="modal-title text-center align-center" id=helpModalTitle>Shortcuts</h5>
-</div>
-<div class=modal-body>
-<b>b</b> Open Buffer
-<br>
-<b>?</b> Open Help
-<br>
-<b>m</b> Go Home
-<br>
-<b>p</b> Go To Posts
-<br>
-<b>t</b> Go To Tags
-<br>
-<b>k</b> Up
-<br>
-<b>j</b> Down
-<br>
-<b>l</b> Left
-<br>
-<b>h</b> Right
-<br>
-<b>Enter</b> Select
-</div>
-<div class=modal-footer>
-<button type=button class="btn btn-secondary" data-bs-dismiss=modal onclick=toggleHelpModal()>Close</button>
-</div>
-</div>
-</div>
-</div>
-<div id=content style=display:flex>
-<div class="container-fluid px-md-5 color-secondary text-normal" style=max-width:800px;width:800px>
-<h2 class="title mt-5">DID Auth</h2>
-<hr>
-<i data-feather=calendar></i>
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet type=text/css href=/css/bootstrap.min.css><link rel=stylesheet type=text/css href=/css/style.css><title>&&||'s Engineering Blog | DID Auth</title><link rel=stylesheet href=/blog/js/scss/main.css></head><body><button type=button onclick=toggleHelpModal() class="btn btn-link btn-block px-md-3 position-absolute top-0 end-0 no-decorate" data-bs-toggle=modal data-bs-target=#helpModal>
+Help</button><div class=modal id=helpModal tabindex=-1 role=dialog aria-labelledby="Help Dialog" aria-hidden=true><div class=modal-dialog role=document><div class=modal-content><div class=modal-header><h5 class="modal-title text-center align-center" id=helpModalTitle>Shortcuts</h5></div><div class=modal-body><b>b</b> Open Buffer<br><b>?</b> Open Help<br><b>m</b> Go Home<br><b>p</b> Go To Posts<br><b>t</b> Go To Tags<br><b>k</b> Up<br><b>j</b> Down<br><b>l</b> Left<br><b>h</b> Right<br><b>Enter</b> Select</div><div class=modal-footer><button type=button class="btn btn-secondary" data-bs-dismiss=modal onclick=toggleHelpModal()>Close</button></div></div></div></div><div id=content style=display:flex><div class="container-fluid px-md-5 color-secondary text-normal" style=max-width:800px;width:800px><h2 class="title mt-5">DID Auth</h2><hr><i data-feather=calendar></i>
 <time datetime=2022-11-24>Nov 24, 2022</time>
 <i data-feather=tag></i>
-<a class="btn btn-sm btn-dark tag-btn color-primary" href=https://engineering.kesselmanrao.com/tags/identity>identity</a>
-<br><br>
-<div class=px-md-3>
-<h4 id=what-is-did-auth>What is DID Auth?</h4>
-<p>DID Authentication (DID Auth) is the mechanism by which an entity can
-cryptographically prove that they are associated with a DID and DID Description.</p>
-<p><strong>Table of Contents</strong></p>
-<ul>
-<li><a href=#what-is-did-auth>What is DID Auth?</a></li>
-<li><a href=#putting-it-together>Putting it together</a></li>
-<li><a href=#preparing-the-challenge>Preparing the Challenge</a></li>
-<li><a href=#preparing-response>Preparing Response</a></li>
-<li><a href=#response-validation>Response Validation</a></li>
-<li><a href=#extending-the-concept-with-verifiable-credentials>Extending the concept with Verifiable Credentials</a></li>
-<li><a href=#things-not-covered>Things Not Covered</a></li>
-<li><a href=#additional-resources>Additional Resources</a></li>
-<li><a href=#code>Code</a></li>
-</ul>
-<p>DID auth is more a concept than an implementation, with a widely known
-implementations hanging around today, such as:</p>
-<ul>
-<li><a href="https://identity.foundation/did-siop/#:~:text=This%20specification%20defines%20the%20%22SIOP,Identity%20Wallets%20into%20their%20web">SIOP</a></li>
-<li><a href=https://openid.net/connect/>OIDC</a></li>
-<li><a href=https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html>OIDC4VCI</a></li>
-<li><a href=https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html>OIDC4VP</a></li>
-</ul>
-<p>I wanted to understand the underlying mechanics of DID Auth better, so I ended
-up putting together a hello world implementation of DID Auth.</p>
-<p>The best reference I found was
+<a class="btn btn-sm btn-dark tag-btn color-primary" href=https://andorsk.github.io/blog/tags/identity>identity</a><br><br><div class=px-md-3><h4 id=what-is-did-auth>What is DID Auth?</h4><p>DID Authentication (DID Auth) is the mechanism by which an entity can
+cryptographically prove that they are associated with a DID and DID Description.</p><p><strong>Table of Contents</strong></p><ul><li><a href=#what-is-did-auth>What is DID Auth?</a></li><li><a href=#putting-it-together>Putting it together</a></li><li><a href=#preparing-the-challenge>Preparing the Challenge</a></li><li><a href=#preparing-response>Preparing Response</a></li><li><a href=#response-validation>Response Validation</a></li><li><a href=#extending-the-concept-with-verifiable-credentials>Extending the concept with Verifiable Credentials</a></li><li><a href=#things-not-covered>Things Not Covered</a></li><li><a href=#additional-resources>Additional Resources</a></li><li><a href=#code>Code</a></li></ul><p>DID auth is more a concept than an implementation, with a widely known
+implementations hanging around today, such as:</p><ul><li><a href="https://identity.foundation/did-siop/#:~:text=This%20specification%20defines%20the%20%22SIOP,Identity%20Wallets%20into%20their%20web">SIOP</a></li><li><a href=https://openid.net/connect/>OIDC</a></li><li><a href=https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html>OIDC4VCI</a></li><li><a href=https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html>OIDC4VP</a></li></ul><p>I wanted to understand the underlying mechanics of DID Auth better, so I ended
+up putting together a hello world implementation of DID Auth.</p><p>The best reference I found was
 <a href=https://w3c-ccg.github.io/vp-request-spec/>here</a>. This tutorial will go
 through the basics and there is associated code alongside it. Another great
-reference was <a href=https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/>this video</a>.</p>
-<h4 id=putting-it-together>Putting it together</h4>
-<p>Let&rsquo;s assume you have a sample did:</p>
-<p><code>did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE</code></p>
-<p>This resolves to the following did document:</p>
-<p><em>DID Document</em></p>
-<hr>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>{</span>
-   <span style=color:#e6db74>&#34;@context&#34;</span>: <span style=color:#e6db74>&#34;https://www.w3.org/ns/did/v1&#34;</span>,
-   <span style=color:#e6db74>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
-   <span style=color:#e6db74>&#34;verificationMethod&#34;</span>: <span style=color:#f92672>[</span>
-      <span style=color:#f92672>{</span>
-         <span style=color:#e6db74>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
-         <span style=color:#e6db74>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;Ed25519VerificationKey2018&#34;</span>,
-         <span style=color:#e6db74>&#34;controller&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
-         <span style=color:#e6db74>&#34;publicKeyBase58&#34;</span>: <span style=color:#e6db74>&#34;BfDHweqYsTe6fB7ywT6nBX6RE37tAwB4CnMJkm8oaFfr&#34;</span>
-      <span style=color:#f92672>}</span>
-   <span style=color:#f92672>]</span>,
-   <span style=color:#e6db74>&#34;authentication&#34;</span>: <span style=color:#f92672>[</span>
-      <span style=color:#f92672>[</span>
-         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
-      <span style=color:#f92672>]</span>
-   <span style=color:#f92672>]</span>,
-   <span style=color:#e6db74>&#34;assertionMethod&#34;</span>: <span style=color:#f92672>[</span>
-      <span style=color:#f92672>[</span>
-         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
-      <span style=color:#f92672>]</span>
-   <span style=color:#f92672>]</span>,
-   <span style=color:#e6db74>&#34;keyAgreement&#34;</span>: <span style=color:#f92672>[</span>
-      <span style=color:#f92672>[</span>
-         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
-      <span style=color:#f92672>]</span>
-   <span style=color:#f92672>]</span>,
-   <span style=color:#e6db74>&#34;capabilityDelegation&#34;</span>: <span style=color:#f92672>[</span>
-      <span style=color:#f92672>[</span>
-         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
-      <span style=color:#f92672>]</span>
-   <span style=color:#f92672>]</span>
-<span style=color:#f92672>}</span>
-</code></pre></div><p>We want to be able to prove that you in fact, are the controller of the did. In
-other words, how does the holder <strong>prove</strong> they in fact hold the did.</p>
-<p>This is where DIDAuth comes in. It&rsquo;s a concept, not an implementation, that
-relies along a challenge, response and cryptography to prove facts.</p>
-<p>Let&rsquo;s assume the basic flow, challenge and response.</p>
-<pre tabindex=0><code class=language-mermaid data-lang=mermaid>sequenceDiagram
-    participant Holder
-    participant Verifier
-    Verifier-&gt;&gt;Holder: DID-Auth Challenge
-    Note right of Holder: Holder prepares response
-    Holder-&gt;&gt;Verifier: DID-Auth Response
-    Note left of Verifier: Verifier validates response
-</code></pre><h4 id=preparing-the-challenge>Preparing the Challenge</h4>
-<p>In a DID Auth interaction, a challenge is transmitted by a relying party to an
+reference was <a href=https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/>this video</a>.</p><h4 id=putting-it-together>Putting it together</h4><p>Let&rsquo;s assume you have a sample did:</p><p><code>did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE</code></p><p>This resolves to the following did document:</p><p><em>DID Document</em></p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span><span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;@context&#34;</span>: <span style=color:#e6db74>&#34;https://www.w3.org/ns/did/v1&#34;</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;verificationMethod&#34;</span>: <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;Ed25519VerificationKey2018&#34;</span>,
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;controller&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>,
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;publicKeyBase58&#34;</span>: <span style=color:#e6db74>&#34;BfDHweqYsTe6fB7ywT6nBX6RE37tAwB4CnMJkm8oaFfr&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>]</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;authentication&#34;</span>: <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>]</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;assertionMethod&#34;</span>: <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>]</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;keyAgreement&#34;</span>: <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>]</span>,
+</span></span><span style=display:flex><span>   <span style=color:#e6db74>&#34;capabilityDelegation&#34;</span>: <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>         <span style=color:#e6db74>&#34;#z6Mkq7ULXu5zD18Zmfxgd24d2ceR3cPjapRQtoGEb36pVUTE&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p>We want to be able to prove that you in fact, are the controller of the did. In
+other words, how does the holder <strong>prove</strong> they in fact hold the did.</p><p>This is where DIDAuth comes in. It&rsquo;s a concept, not an implementation, that
+relies along a challenge, response and cryptography to prove facts.</p><p>Let&rsquo;s assume the basic flow, challenge and response.</p><div class=mermaid>sequenceDiagram
+participant Holder
+participant Verifier
+Verifier->>Holder: DID-Auth Challenge
+Note right of Holder: Holder prepares response
+Holder->>Verifier: DID-Auth Response
+Note left of Verifier: Verifier validates response</div><h4 id=preparing-the-challenge>Preparing the Challenge</h4><p>In a DID Auth interaction, a challenge is transmitted by a relying party to an
 identity owner, asking the identity owner to return a response that proves their
 control of a DID. In this case, the relying party is the <em>verifier</em> and the
-identity owner is the <em>holder</em>.</p>
-<p>Similar to other authentication methods, DID Auth relies on a challenge-response
+identity owner is the <em>holder</em>.</p><p>Similar to other authentication methods, DID Auth relies on a challenge-response
 cycle in which a relying party authenticates the DID of an identity owner.
 During this cycle, an identity owner demonstrates control of their DID through
-authentication-proof mechanisms.</p>
-<p>Example Challenge</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
-  <span style=color:#f92672>&#34;query&#34;</span>: [
-    {
-      <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;DIDAuthentication&#34;</span>,
-      <span style=color:#f92672>&#34;acceptedMethods&#34;</span>: [{ <span style=color:#f92672>&#34;method&#34;</span>: <span style=color:#e6db74>&#34;key&#34;</span> }],
-      <span style=color:#f92672>&#34;acceptedCryptosuites&#34;</span>: [{ <span style=color:#f92672>&#34;cryptosuite&#34;</span>: <span style=color:#e6db74>&#34;ed25519&#34;</span> }]
-    }
-  ],
-  <span style=color:#f92672>&#34;challenge&#34;</span>: <span style=color:#e6db74>&#34;99612b24-63d9-11ea-b99f-4f66f3e4f81a&#34;</span>,
-  <span style=color:#f92672>&#34;domain&#34;</span>: <span style=color:#e6db74>&#34;example.com&#34;</span>
-}
-</code></pre></div><p>There are few really interesting things here. Firstly, let us notice that in
+authentication-proof mechanisms.</p><p>Example Challenge</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;query&#34;</span>: [
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;DIDAuthentication&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;acceptedMethods&#34;</span>: [{ <span style=color:#f92672>&#34;method&#34;</span>: <span style=color:#e6db74>&#34;key&#34;</span> }],
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;acceptedCryptosuites&#34;</span>: [{ <span style=color:#f92672>&#34;cryptosuite&#34;</span>: <span style=color:#e6db74>&#34;ed25519&#34;</span> }]
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  ],
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;challenge&#34;</span>: <span style=color:#e6db74>&#34;99612b24-63d9-11ea-b99f-4f66f3e4f81a&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;domain&#34;</span>: <span style=color:#e6db74>&#34;example.com&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>There are few really interesting things here. Firstly, let us notice that in
 this challenge, the DID of the holder is not present. That may seem unintuitive,
 because you would expect that to prove you own the did, you would need to also
 share the did value, but that is not required. It also does not necessarily show
-that the relying party owns a DID frm their! Another curveball here.</p>
-<p>Second: we generate a <code>challenge</code> ( i find it easier to think of a nonce ), which a
-one time seed used to help sign. Learn more about the challenge format <a href=https://w3c-ccg.github.io/vp-request-spec/#the-did-authentication-query-format>here</a></p>
-<p>Third might also notice a <code>domain</code> field. According to the w3c, it needs to be
-checked to validate ownership of the domain.</p>
-<pre tabindex=0><code class=language-blockquote data-lang=blockquote>It is vital that a holder implementation check the domain provided by the
+that the relying party owns a DID frm their! Another curveball here.</p><p>Second: we generate a <code>challenge</code> ( i find it easier to think of a nonce ), which a
+one time seed used to help sign. Learn more about the challenge format <a href=https://w3c-ccg.github.io/vp-request-spec/#the-did-authentication-query-format>here</a></p><p>Third might also notice a <code>domain</code> field. According to the w3c, it needs to be
+checked to validate ownership of the domain.</p><div class=blockquote><blockquote>It is vital that a holder implementation check the domain provided by the
 verifier against the domain used for the current channel of communication. If
 this is not done, a dishonest verifier could then replay the message to a
-domain that is not their own.
-</code></pre><p>I&rsquo;m not sure I buy this yet as the right way to do it. I&rsquo;ll need to follow up
-more. Relying on a domain for verification seems wrong.</p>
-<h4 id=preparing-response>Preparing Response</h4>
-<p>A response is what the holder prepares to the verifier to show they own the did.
+domain that is not their own.</blockquote></div><p>I&rsquo;m not sure I buy this yet as the right way to do it. I&rsquo;ll need to follow up
+more. Relying on a domain for verification seems wrong.</p><h4 id=preparing-response>Preparing Response</h4><p>A response is what the holder prepares to the verifier to show they own the did.
 The response has a few critical features to it. Firstly, it MUST be linked to
 the challenge ( using the Nonce ) and secondly it MUST contain proof of control
-of the DID of the holder.</p>
-<p>The w3c specs demonstrate the response in a verifiable presentation of the
-following form below:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
-  <span style=color:#f92672>&#34;@context&#34;</span>: [<span style=color:#e6db74>&#34;https://www.w3.org/2022/credentials/v2&#34;</span>],
-  <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;VerifiablePresentation&#34;</span>,
-  <span style=color:#f92672>&#34;holder&#34;</span>: <span style=color:#e6db74>&#34;did:example:12345&#34;</span>,
-  <span style=color:#f92672>&#34;proof&#34;</span>: {
-    <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;DataIntegrityProof&#34;</span>,
-    <span style=color:#f92672>&#34;cryptosuite&#34;</span>: <span style=color:#e6db74>&#34;eddsa-2022&#34;</span>,
-    <span style=color:#f92672>&#34;verificationMethod&#34;</span>: <span style=color:#e6db74>&#34;did:example:12345#key-1&#34;</span>,
-    <span style=color:#f92672>&#34;challenge&#34;</span>: <span style=color:#e6db74>&#34;99612b24-63d9-11ea-b99f-4f66f3e4f81a&#34;</span>,
-    <span style=color:#f92672>&#34;domain&#34;</span>: <span style=color:#e6db74>&#34;example.com&#34;</span>,
-    <span style=color:#f92672>&#34;created&#34;</span>: <span style=color:#e6db74>&#34;2022-02-25T14:58:42Z&#34;</span>,
-    <span style=color:#f92672>&#34;proofPurpose&#34;</span>: <span style=color:#e6db74>&#34;authentication&#34;</span>,
-    <span style=color:#f92672>&#34;proofValue&#34;</span>: <span style=color:#e6db74>&#34;z3FXQjecWufY46...UAUL5n2Brbx&#34;</span>
-  }
-}
-</code></pre></div><p>In the code sample shared, I used JSONWebSignatures to verify and create the proofs.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
-  <span style=color:#f92672>&#34;@context&#34;</span>: [
-    <span style=color:#e6db74>&#34;https://www.w3.org/2018/credentials/v1&#34;</span>,
-    <span style=color:#e6db74>&#34;https://w3id.org/security/suites/jws-2020/v1&#34;</span>
-  ],
-  <span style=color:#f92672>&#34;holder&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mks7tCEjXLYG1eZPxeLriwV2fserei72A2KUAMRb1nff7G&#34;</span>,
-  <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;VerifiablePresentation&#34;</span>,
-  <span style=color:#f92672>&#34;proof&#34;</span>: {
-    <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;JsonWebSignature2020&#34;</span>,
-    <span style=color:#f92672>&#34;created&#34;</span>: <span style=color:#e6db74>&#34;2022-11-24T22:44:33Z&#34;</span>,
-    <span style=color:#f92672>&#34;jws&#34;</span>: <span style=color:#e6db74>&#34;eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..QJDhf5cwCzuPOzOIebUQOopr6dEUx0QvwPYKKZ73NMDnIeQrM_5QFHJ8bmZEWtSNtY4z5JBP5eT2zH_FOnzHBw&#34;</span>,
-    <span style=color:#f92672>&#34;proofPurpose&#34;</span>: <span style=color:#e6db74>&#34;DIDAuthentication&#34;</span>,
-    <span style=color:#f92672>&#34;verificationMethod&#34;</span>: <span style=color:#e6db74>&#34;603621dc-c251-466d-9b66-e2e31eae40ab&#34;</span>
-  }
-}
-</code></pre></div><p>The public key is leveraged to validate the proof. You can see a test, where a
-bad actor tries to pretend to own the key <a href=https://github.com/benri-io/did_auth_demo/blob/master/did_auth_test.go#L95-L118>here</a></p>
-<h4 id=response-validation>Response Validation</h4>
-<p>Validating the proof involves using a verifying algorithm.</p>
-<h4 id=things-not-covered>Things Not Covered</h4>
-<ul>
-<li>I consider transports an implementation detail, and out of scope for this
-document. Maybe in a future one.</li>
-<li>The details of the cryptographic proofs and how they work are a little too low
-level for this article.</li>
-<li>I did not go into practical implementations of DID Auth. This was focused
-mostly on being super clear.</li>
-<li>Data formats such as JWT, JSON-LD, HTTP Signatures, and JWS</li>
-</ul>
-<h4 id=additional-resources>Additional Resources</h4>
-<ul>
-<li><a href=https://github.com/Sphereon-Opensource/SIOP-OpenID4VP>Sphereon has a great SoIP-v2 library</a></li>
-<li><a href=https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/topics-and-advance-readings/DID-Auth%20protocol.md>More protocol specifications here</a></li>
-<li><a href=https://identity.foundation/did-siop/>SIOP</a></li>
-<li><a href=https://openid.net/connect/>OIDC</a></li>
-<li><a href=https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html>OIDC4VCI</a></li>
-<li><a href=https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html>OIDC4VP</a></li>
-</ul>
-<h4 id=code>Code</h4>
-<p>The code for this resides in <a href=https://github.com/benri-io/did_auth_demo>github.com/benri-io/did_auth_demo</a>.</p>
-</div>
-<div class=mb-5>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
-<script>mermaid.initialize({startOnLoad:!0})</script>
-</div><div class=footer>
-<div class=color-secondary>
-<div>
-<div class=px-md-3 style=float:right>
-<span id=toggle-buffer> Toggle Buffer </span>
-<b>Web</b> Online
-</div>
-<div class=px-md-3>
-<span class="dot good_bg"> </span>
-<span class=px-md-3>
-1.3k https://engineering.kesselmanrao.com/posts/did_auth/
-</span>
-</div>
-</div>
-</div>
-<div id=buffer-selector class="hidden buffer filled">
-<div class="text-primary text-left">
-<span class=px-md-4>12</span>Switch To Buffer:
-</div>
-<table class="table table-dark">
-<tbody>
-<tr class="text-primary clickable-row hover-highlight">
-<th class="text-white text-left" scope=row> <a href=/posts/did_auth/>DID Auth</a></th>
-<td href=/posts/did_auth/ class=text-secondary> <a href=#>[did identity authentication]</a></td>
-<td class=text-primary><a href=#>posts</a></td>
-<td class=text-primary><a href=#>page</a></td>
-<td class="text-primary text-right"><a href=/posts/did_auth/>/posts/did_auth/</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id=message-buffer class=px-md-3 style=color:#fff><br></div>
-</div>
-<script src=/js/feather.min.js></script>
+of the DID of the holder.</p><p>The w3c specs demonstrate the response in a verifiable presentation of the
+following form below:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;@context&#34;</span>: [<span style=color:#e6db74>&#34;https://www.w3.org/2022/credentials/v2&#34;</span>],
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;VerifiablePresentation&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;holder&#34;</span>: <span style=color:#e6db74>&#34;did:example:12345&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;proof&#34;</span>: {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;DataIntegrityProof&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;cryptosuite&#34;</span>: <span style=color:#e6db74>&#34;eddsa-2022&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;verificationMethod&#34;</span>: <span style=color:#e6db74>&#34;did:example:12345#key-1&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;challenge&#34;</span>: <span style=color:#e6db74>&#34;99612b24-63d9-11ea-b99f-4f66f3e4f81a&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;domain&#34;</span>: <span style=color:#e6db74>&#34;example.com&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;created&#34;</span>: <span style=color:#e6db74>&#34;2022-02-25T14:58:42Z&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;proofPurpose&#34;</span>: <span style=color:#e6db74>&#34;authentication&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;proofValue&#34;</span>: <span style=color:#e6db74>&#34;z3FXQjecWufY46...UAUL5n2Brbx&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>In the code sample shared, I used JSONWebSignatures to verify and create the proofs.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;@context&#34;</span>: [
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https://www.w3.org/2018/credentials/v1&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https://w3id.org/security/suites/jws-2020/v1&#34;</span>
+</span></span><span style=display:flex><span>  ],
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;holder&#34;</span>: <span style=color:#e6db74>&#34;did:key:z6Mks7tCEjXLYG1eZPxeLriwV2fserei72A2KUAMRb1nff7G&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;VerifiablePresentation&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;proof&#34;</span>: {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;JsonWebSignature2020&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;created&#34;</span>: <span style=color:#e6db74>&#34;2022-11-24T22:44:33Z&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;jws&#34;</span>: <span style=color:#e6db74>&#34;eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..QJDhf5cwCzuPOzOIebUQOopr6dEUx0QvwPYKKZ73NMDnIeQrM_5QFHJ8bmZEWtSNtY4z5JBP5eT2zH_FOnzHBw&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;proofPurpose&#34;</span>: <span style=color:#e6db74>&#34;DIDAuthentication&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;verificationMethod&#34;</span>: <span style=color:#e6db74>&#34;603621dc-c251-466d-9b66-e2e31eae40ab&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The public key is leveraged to validate the proof. You can see a test, where a
+bad actor tries to pretend to own the key <a href=https://github.com/benri-io/did_auth_demo/blob/master/did_auth_test.go#L95-L118>here</a></p><h4 id=response-validation>Response Validation</h4><p>Validating the proof involves using a verifying algorithm.</p><h4 id=things-not-covered>Things Not Covered</h4><ul><li>I consider transports an implementation detail, and out of scope for this
+document. Maybe in a future one.</li><li>The details of the cryptographic proofs and how they work are a little too low
+level for this article.</li><li>I did not go into practical implementations of DID Auth. This was focused
+mostly on being super clear.</li><li>Data formats such as JWT, JSON-LD, HTTP Signatures, and JWS</li></ul><h4 id=additional-resources>Additional Resources</h4><ul><li><a href=https://github.com/Sphereon-Opensource/SIOP-OpenID4VP>Sphereon has a great SoIP-v2 library</a></li><li><a href=https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/topics-and-advance-readings/DID-Auth%20protocol.md>More protocol specifications here</a></li><li><a href=https://identity.foundation/did-siop/>SIOP</a></li><li><a href=https://openid.net/connect/>OIDC</a></li><li><a href=https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html>OIDC4VCI</a></li><li><a href=https://openid.net/specs/openid-connect-4-verifiable-presentations-1_0-07.html>OIDC4VP</a></li></ul><h4 id=code>Code</h4><p>The code for this resides in <a href=https://github.com/benri-io/did_auth_demo>github.com/benri-io/did_auth_demo</a>.</p></div><div class=mb-5></div><script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0})</script></div><div class=footer><div class=color-secondary><div><div class=px-md-3 style=float:right><span id=toggle-buffer>Toggle Buffer</span>
+<b>Web</b> Online</div><div class=px-md-3><span class="dot good_bg"></span><span class=px-md-3>1.3k https://andorsk.github.io/blog/posts/did_auth/</span></div></div></div><div id=buffer-selector class="hidden buffer filled"><div class="text-primary text-left"><span class=px-md-4>12</span>Switch To Buffer:</div><table class="table table-dark"><tbody><tr class="text-primary clickable-row hover-highlight"><th class="text-white text-left" scope=row><a href=/blog/posts/did_auth/>DID Auth</a></th><td href=/blog/posts/did_auth/ class=text-secondary><a href=#>[did identity authentication]</a></td><td class=text-primary><a href=#>posts</a></td><td class=text-primary><a href=#>page</a></td><td class="text-primary text-right"><a href=/blog/posts/did_auth/>/blog/posts/did_auth/</a></td></tr><tr class="text-primary clickable-row hover-highlight"><th class="text-white text-left" scope=row><a href=/blog/scope/></a></th><td href=/blog/scope/ class=text-secondary><a href=#>[]</a></td><td class=text-primary><a href=#>page</a></td><td class=text-primary><a href=#>page</a></td><td class="text-primary text-right"><a href=/blog/scope/>/blog/scope/</a></td></tr></tbody></table></div><div id=message-buffer class=px-md-3 style=color:#fff><br></div></div><script src=/js/feather.min.js></script>
 <script src=/js/index.js></script>
-<script>feather.replace()</script>
-<script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type=text/x-mathjax-config>
- MathJax.Hub.Config({
-     tex2jax: {
-         inlineMath: [['$','$'], ['\\(','\\)']],
-         displayMath: [['$$','$$'], ['\[','\]']],
-         processEscapes: true,
-         processEnvironments: true,
-         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-         TeX: { equationNumbers: { autoNumber: "AMS" },
-                extensions: ["AMSmath.js", "AMSsymbols.js"] }
-     }
- });
-</script>
-<script type=text/x-mathjax-config>
- MathJax.Hub.Queue(function() {
-     // Fix <code> tags after MathJax finishes running. This is a
-     // hack to overcome a shortcoming of Markdown. Discussion at
-     // https://github.com/mojombo/jekyll/issues/199
-     var all = MathJax.Hub.getAllJax(), i;
-     for(i = 0; i &lt; all.length; i += 1) {
-         all[i].SourceElement().parentNode.className += ' has-jax';
-     }
- });
-</script>
-</body>
-</html>
+<script>feather.replace()</script><script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>
