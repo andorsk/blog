@@ -18,7 +18,7 @@ theme = "emacsTheme"
     name = "Tags"
     pre = "tag"
     url = "/tags/"
-    weight = n3
+    weight = 3
   [[menu.main]]
     name = "Scope"
     pre = "info"
