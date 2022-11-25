@@ -1,0 +1,171 @@
+<!doctype html><html><head>
+<meta name=generator content="Hugo 0.91.2">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=stylesheet type=text/css href=/css/bootstrap.min.css>
+<link rel=stylesheet type=text/css href=/css/style.css>
+<title>&&||'s Engineering Blog</title>
+<link rel=stylesheet href=/js/scss/main.css>
+</head>
+<body><button type=button onclick=toggleHelpModal() class="btn btn-link btn-block px-md-3 position-absolute top-0 end-0 no-decorate" data-bs-toggle=modal data-bs-target=#helpModal>
+Help
+</button>
+<div class=modal id=helpModal tabindex=-1 role=dialog aria-labelledby="Help Dialog" aria-hidden=true>
+<div class=modal-dialog role=document>
+<div class=modal-content>
+<div class=modal-header>
+<h5 class="modal-title text-center align-center" id=helpModalTitle>Shortcuts</h5>
+</div>
+<div class=modal-body>
+<b>b</b> Open Buffer
+<br>
+<b>?</b> Open Help
+<br>
+<b>m</b> Go Home
+<br>
+<b>p</b> Go To Posts
+<br>
+<b>t</b> Go To Tags
+<br>
+<b>k</b> Up
+<br>
+<b>j</b> Down
+<br>
+<b>l</b> Left
+<br>
+<b>h</b> Right
+<br>
+<b>Enter</b> Select
+</div>
+<div class=modal-footer>
+<button type=button class="btn btn-secondary" data-bs-dismiss=modal onclick=toggleHelpModal()>Close</button>
+</div>
+</div>
+</div>
+</div>
+<div id=content style=display:flex>
+<div id=home-jumbotron class="jumbotron text-center container">
+<div class=col-xs-12 style=height:150px></div>
+<div class=ascii>__.---.-..-----..--| |.-----..----.
+| _ || || _ || _ || _|
+|___._||__|__||_____||_____||__|
+</div>
+&&||'s Engineering Blog
+<div class="row text-small justify-content-md-center">
+<div class="col col-md-auto color-grey">
+<small>"Talk is cheap. Show me the code." - Torvalds</small>
+</div>
+</div>
+<div class="container mt-3">
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary">
+<i data-feather=pen-tool></i>
+<a href=/posts/><span class="btn text-p clickable-row" style=text-align:center;padding-left:6px;width:300px> Posts </span></a>
+</div>
+</div>
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary">
+<i data-feather=tag></i>
+<a href=/tags/><span class="btn text-p clickable-row" style=text-align:center;padding-left:6px;width:300px> Tags </span></a>
+</div>
+</div>
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary">
+<i data-feather=info></i>
+<a href=/scope><span class="btn text-p clickable-row" style=text-align:center;padding-left:6px;width:300px> Scope </span></a>
+</div>
+</div>
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary">
+</div>
+</div>
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary">
+<b>Latest Post: </b>
+<a href=/posts/did_auth/>
+<span class="btn text-p clickable-row" style=text-align:center;padding-left:6px;width:300px>
+DID Auth
+</span>
+</a>
+</div>
+<div class="row justify-content-md-center color-grey" style=font-size:1rem>
+<small> 2022-11-24 22:04:55 +0530 +0530 </small>
+</div>
+</div>
+<div class="row justify-content-md-center">
+<div class="col col-md-auto color-primary" style=color:#ff0>
+<b>Press '?' for shortcuts and help</b>
+</div>
+</div>
+</div>
+<div height=300px class=mt-5 style=height:300px;display:inline-block>
+<div class=color-grey>
+Andor loaded 0 packages across 0 modules in 0.13s
+</div>
+<div class="px-md-5 mt-5">
+<a href=https://github.com/andorsk><i style=color:#6cc644 data-feather=github></i></a>
+</div>
+</div>
+</div><div class=footer>
+<div class=color-secondary>
+<div>
+<div class=px-md-3 style=float:right>
+<span id=toggle-buffer> Toggle Buffer </span>
+<b>Web</b> Online
+</div>
+<div class=px-md-3>
+<span class="dot good_bg"> </span>
+<span class=px-md-3>
+1.3k https://engineering.kesselmanrao.com/
+</span>
+</div>
+</div>
+</div>
+<div id=buffer-selector class="hidden buffer filled">
+<div class="text-primary text-left">
+<span class=px-md-4>12</span>Switch To Buffer:
+</div>
+<table class="table table-dark">
+<tbody>
+<tr class="text-primary clickable-row hover-highlight">
+<th class="text-white text-left" scope=row> <a href=/posts/did_auth/>DID Auth</a></th>
+<td href=/posts/did_auth/ class=text-secondary> <a href=#>[did identity authentication]</a></td>
+<td class=text-primary><a href=#>posts</a></td>
+<td class=text-primary><a href=#>page</a></td>
+<td class="text-primary text-right"><a href=/posts/did_auth/>/posts/did_auth/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id=message-buffer class=px-md-3 style=color:#fff><br></div>
+</div>
+<script src=/js/feather.min.js></script>
+<script src=/js/index.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type=text/x-mathjax-config>
+ MathJax.Hub.Config({
+     tex2jax: {
+         inlineMath: [['$','$'], ['\\(','\\)']],
+         displayMath: [['$$','$$'], ['\[','\]']],
+         processEscapes: true,
+         processEnvironments: true,
+         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+         TeX: { equationNumbers: { autoNumber: "AMS" },
+                extensions: ["AMSmath.js", "AMSsymbols.js"] }
+     }
+ });
+</script>
+<script type=text/x-mathjax-config>
+ MathJax.Hub.Queue(function() {
+     // Fix <code> tags after MathJax finishes running. This is a
+     // hack to overcome a shortcoming of Markdown. Discussion at
+     // https://github.com/mojombo/jekyll/issues/199
+     var all = MathJax.Hub.getAllJax(), i;
+     for(i = 0; i &lt; all.length; i += 1) {
+         all[i].SourceElement().parentNode.className += ' has-jax';
+     }
+ });
+</script>
+</body>
+</html>
