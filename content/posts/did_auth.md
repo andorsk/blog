@@ -7,6 +7,8 @@ keywords: ["did", "identity", "authentication"]
 description: "a brief walkthrough on the basics of did auth"
 ---
 
+\*_Status:_ Work in Progress
+
 #### What is DID Auth?
 
 DID Authentication (DID Auth) is the mechanism by which an entity can
