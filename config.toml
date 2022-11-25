@@ -1,7 +1,7 @@
-baseURL = "https://engineering.kesselmanrao.com/"
+baseURL = "https://andorsk.github.io/blog/"
 languageCode = "en-us"
 title = "&&||'s Engineering Blog"
-url = "https://engineering.kesselmanrao.com/"
+url = "https://andorsk.github.com/blog/"
 theme = "emacsTheme"
 
 [Author]
@@ -18,7 +18,7 @@ theme = "emacsTheme"
     name = "Tags"
     pre = "tag"
     url = "/tags/"
-    weight = 3
+    weight = n3
   [[menu.main]]
     name = "Scope"
     pre = "info"
