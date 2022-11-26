@@ -149,41 +149,36 @@ h3:before {
   margin-left: auto;
   align-text: center;
   justify-content: center; }
-
-.mermaid svg {
-  display: block;
-  justify-content: center;
-  margin-right: auto;
-  margin-left: auto; }
-
-.mermaid .messageText {
-  fill: white !important; }
-
-.mermaid line {
-  fill: white !important;
-  stroke: white !important;
-  fill: white !important; }
-
-.mermaid markers {
-  fill: white !important; }
-
-.mermaid polygon {
-  fill: white !important; }
-
-.mermaid defs {
-  fill: white !important; }
-
-.mermaid path {
-  fill: white !important; }
-
-.mermaid .note {
-  fill: #cc9999 !important;
-  stroke: none !important;
-  stroke-color: black !important;
-  stroke-width: 2px !important; }
-
-.mermaid .cluster rect {
-  fill: white !important; }
+  .mermaid svg {
+    display: block;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto; }
+  .mermaid marker {
+    fill: white !important; }
+  .mermaid .messageText {
+    fill: white !important; }
+  .mermaid line {
+    stroke: white !important; }
+  .mermaid .node rect {
+    fill: white !important; }
+  .mermaid .note {
+    fill: #cc9999 !important;
+    stroke: none !important;
+    stroke-color: black !important;
+    stroke-width: 2px !important; }
+  .mermaid .cluster rect {
+    fill: white !important; }
+  .mermaid .edgePaths path {
+    stroke: white !important;
+    fill: none !important; }
+  .mermaid .flowchart-link {
+    stroke: white !important; }
+  .mermaid .edgeLabels .edgeLabel {
+    color: white !important;
+    background-color: #333333 !important; }
+  .mermaid .edgeLabels .label {
+    fill: none !important; }
 
 blockquote {
   border-left: 1px solid #ccc;
@@ -193,3 +188,35 @@ blockquote {
 
 blockquote p {
   display: inline; }
+
+.definition {
+  background-color: #333333; }
+  .definition .label {
+    color: grey; }
+  .definition li {
+    list-style: none;
+    /* Remove default bullets */ }
+  .definition ol {
+    counter-reset: item; }
+    .definition ol li {
+      display: block; }
+    .definition ol li::before {
+      content: counter(item) ". ";
+      counter-increment: item;
+      color: #6aade9; }
+
+.theorem {
+  background-color: #333333; }
+  .theorem .label {
+    color: grey; }
+
+.equation {
+  text-align: center !important; }
+
+.todo {
+  display: block;
+  background-color: #cc9999;
+  color: black;
+  text-align: center; }
+  .todo .label {
+    color: grey; }
