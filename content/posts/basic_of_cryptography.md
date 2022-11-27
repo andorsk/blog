@@ -57,8 +57,82 @@ understand "how do I use this".
   - [Entropy](#entropy)
     - [Properties of Entropy](#properties-of-entropy)
   - [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
-- [Notes and References](#notes-and-references-2)
+  - [Notes and References](#notes-and-references-2)
   - [Exercises](#exercises-1)
+- [Block and Stream Ciphers](#block-and-stream-ciphers)
+  - [Introduction](#introduction-2)
+  - [Substitution-Permutation Networks](#substitution-permutation-networks)
+  - [Linear Cryptanalysis](#linear-cryptanalysis)
+    - [The Piling-up Lemma](#the-piling-up-lemma)
+    - [Linear Approximations of S-boxes](#linear-approximations-of-s-boxes)
+    - [A Linear Attack on an SPN](#a-linear-attack-on-an-spn)
+  - [Differential Cryptanalysis](#differential-cryptanalysis)
+  - [The Data Encryption Standard](#the-data-encryption-standard)
+    - [Description of DES](#description-of-des)
+    - [Analysis of DES](#analysis-of-des)
+  - [The Advanced Encryption Standard](#the-advanced-encryption-standard)
+    - [Description of AES](#description-of-aes)
+    - [Analysis of AES](#analysis-of-aes)
+  - [Modes of Operation](#modes-of-operation)
+    - [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
+  - [Stream Ciphers](#stream-ciphers)
+    - [Correlation Attack on a Combination Generator](#correlation-attack-on-a-combination-generator)
+    - [Algebraic Attack on a Filter Generator](#algebraic-attack-on-a-filter-generator)
+  - [Notes and References](#notes-and-references-3)
+- [Hash Functions and Message Authentication](#hash-functions-and-message-authentication)
+  - [Hash Functions and Data Integrity](#hash-functions-and-data-integrity)
+  - [Security of Hash Functions](#security-of-hash-functions)
+    - [The Random Oracle Model](#the-random-oracle-model)
+    - [Algorithms in the Random Oracle Model](#algorithms-in-the-random-oracle-model)
+    - [Comparison of Security Criteria](#comparison-of-security-criteria)
+  - [Iterated Hash Functions](#iterated-hash-functions)
+    - [The Merkle-Damgard Construction](#the-merkle-damgard-construction)
+    - [Some Examples of Iterated Hash Functions](#some-examples-of-iterated-hash-functions)
+  - [The Sponge Construct](#the-sponge-construct)
+    - [SHA-3](#sha-3)
+  - [Message Authentication Codes](#message-authentication-codes)
+    - [Nested MACs and HMAC](#nested-macs-and-hmac)
+    - [CBC-MAC](#cbc-mac)
+    - [Authenticated Encryption](#authenticated-encryption)
+  - [Unconditionally Secure MACs](#unconditionally-secure-macs)
+    - [Strongly Universal Hash Families](#strongly-universal-hash-families)
+    - [Optimality of Deception Probabilities](#optimality-of-deception-probabilities)
+  - [Notes and References](#notes-and-references-4)
+- [The RSA Cryptosystem and Factoring Integers](#the-rsa-cryptosystem-and-factoring-integers)
+  - [Introduction to Public-key Cryptography](#introduction-to-public-key-cryptography)
+  - [More Number Theory](#more-number-theory)
+    - [The Euclidean Algorithm](#the-euclidean-algorithm)
+    - [The Chinese Remainder Theorem](#the-chinese-remainder-theorem)
+  - [The RSA Cryptosystem](#the-rsa-cryptosystem)
+    - [Implementing RSA](#implementing-rsa)
+  - [Primality Testing](#primality-testing)
+    - [Legendre and Jacobi Symbols](#legendre-and-jacobi-symbols)
+    - [The Solovay-Strassen Algorithm](#the-solovay-strassen-algorithm)
+    - [The Miller-Rabin Algorithm](#the-miller-rabin-algorithm)
+  - [Square Roots Modulo n](#square-roots-modulo-n)
+  - [Factoring Algorithms](#factoring-algorithms)
+    - [The Pollard p − 1 Algorithm](#the-pollard-p--1-algorithm)
+    - [The Pollard Rho Algorithm](#the-pollard-rho-algorithm)
+    - [Dixon’s Random Squares Algorithm](#dixons-random-squares-algorithm)
+  - [Other Attacks on RSA](#other-attacks-on-rsa)
+    - [Computing φ(n)](#computing-φn)
+    - [The Decryption Exponent](#the-decryption-exponent)
+    - [Wiener's Low Decryption Exponent Attack](#wieners-low-decryption-exponent-attack)
+  - [The Rabin Cryptosystem](#the-rabin-cryptosystem)
+    - [Security of the Rabin Cryptosystem](#security-of-the-rabin-cryptosystem)
+  - [Semantic Security of RSA](#semantic-security-of-rsa)
+    - [Partial Information Concerning Plaintext Bits](#partial-information-concerning-plaintext-bits)
+    - [Obtaining Semantic Security](#obtaining-semantic-security)
+  - [Notes and References](#notes-and-references-5)
+- [Public-Key Cryptography and Discrete Logarithms](#public-key-cryptography-and-discrete-logarithms)
+- [Signature Schemes](#signature-schemes-1)
+- [Post Quantum Cryptography](#post-quantum-cryptography)
+- [Identification Schemes and Entity Authentication](#identification-schemes-and-entity-authentication)
+- [Key Distribution](#key-distribution)
+- [Key Agreement Schemes](#key-agreement-schemes)
+- [Miscellaneous Topics](#miscellaneous-topics)
+- [Number Theory and Algebraic Concepts for Cryptography](#number-theory-and-algebraic-concepts-for-cryptography)
+- [Psudorandom Bit Generation for Cryptography](#psudorandom-bit-generation-for-cryptography)
 
 <!-- markdown-toc end -->
 
@@ -750,6 +824,12 @@ Decryption is identical to encryption. If $y = (y_1, . . . , y_n)$, then
 
 - 1917 algo that automatic encryption and decryption of telegraph messages
 - thought unbreakable until Shannon created perfect secrecy
+- In cryptography, the one-time pad (OTP) is an encryption technique that cannot
+  be cracked, but requires the use of a single-use pre-shared key that is not
+  smaller than the message being sent. In this technique, a plaintext is paired
+  with a random secret key (also referred to as a one-time pad). Then, each bit
+  or character of the plaintext is encrypted by combining it with the
+  corresponding bit or character from the pad using modular addition.
 - downside \$|K| \geq |P|\$ requires the amount of key must be at least as big
   as the plaintext.
   - n bits for n plaintext
@@ -757,6 +837,21 @@ Decryption is identical to encryption. If $y = (y_1, . . . , y_n)$, then
 - One-time Pad is vulnerable to a known-plaintext attack, since K can be
   computed as the exclusive-or of the bitstrings x and eK(x)
 - in some cases, such as military or diplomatic security, OTP might be used.
+- The key must be at least as long as the plaintext.
+- The key must be random (uniformly distributed in the set of all possible keys
+  and independent of the plaintext), entirely sampled from a non-algorithmic,
+  chaotic source such as a hardware random number generator. It is not
+  sufficient for OTP keys to pass statistical randomness tests as such tests
+  cannot measure entropy, and the number of bits of entropy must be at least
+  equal to the number of bits in the plaintext. For example, using cryptographic
+  hashes or mathematical functions (such as logarithm or square root) to
+  generate keys from fewer bits of entropy would break the uniform distribution
+  requirement, and therefore would not provide perfect secrecy.
+- The key must never be reused in whole or in part.
+- The key must be kept completely secret by the communicating parties.
+- \${\textstyle \mathrm {H} (M)=\mathrm {H} (M|C)}{\textstyle \mathrm {H}
+  (M)=\mathrm {H} (M|C)}\$, where \${\textstyle \mathrm {H} (M)}{\textstyle
+  \mathrm {H} (M)}\$
 
 ### Entropy
 
@@ -824,6 +919,8 @@ The conditional entropy measures the average amount of information about X that 
   H(K|C) = H(K) + H(P) − H(C)
   {{< /equation >}}
 - The remaining possible, but incorrect, keys are called spurious keys
+- Pn to be the random variable that has as its probability distribution that of
+  all n-grams of plaintext.
 
 ```definition
 Suppose $L$ is a natural language. The entropy of $L$ is defined
@@ -839,6 +936,26 @@ $H_L = \lim_{n \to \inf}\frac{H(P^n)}{n}$
 
 - Estimate of HL gives a redundancy of about 0.75. This means that the English language is 75% redundant!
 
+- spurious key computation:
+  {{< equation >}}
+  K(y)={K \in K:\exists x\in P^{n} \text{ such that } Pr[x]>0 \text{ and } e_K(x)=y}.
+  {{</ equation  >}}
+
+- That is, K(y) is the set of keys K for which y is the encryption of a
+  meaningful string of plaintext of length n, i.e., the set of “possible” keys,
+  given that y is the ciphertext. Average number of spurious keys are
+  \$\sum{Pr[y]|K(y)|}− 1.\$
+
+```theorem
+Suppose $(P, C, K, E, D)$ is a cryptosystem where $|C| = |P|$ and keys are
+chosen equiprobably. Let RL denote the redundancy of the underlying language.
+Then given a string of ciphertext of length n, where n is sufficiently large,
+the expected number of spurious keys, sn, satisfies
+$s_n \geq \frac{|K|}{P^{nR_L}} - 1$
+```
+
+**unicity distance**
+
 ```definition
 The unicity distance of a cryptosystem is defined to be the value of n, denoted by $n_0$,
 at which the expected number of spurious keys becomes zero;
@@ -846,7 +963,19 @@ i.e., the average amount of ciphertext required for an opponent to be
 able to uniquely compute the key, given enough computing time.
 ```
 
-## Notes and References
+{{< equation >}}
+n_0 \approx \frac{log_2{|K}}{R_L log_2|P|}
+{{</ equation  >}}
+
+- For substitution: In this cryptosystem, |P| = 26 and |K| = 26!. If we take RL = 0.75, then we get an estimate for the unicity
+
+{{< equation >}}
+n_0 \approx \frac{88.4}{.74 x 4.7} \approx 25
+{{</ equation  >}}
+
+- Suggests with 25, usually decryption is possible
+
+### Notes and References
 
 - Codes and Cryptography by Dominic Welsh
 - Communication Theory by Charles Goldie and Richard Pinch
@@ -856,3 +985,5 @@ able to uniquely compute the key, given enough computing time.
 ```todo
 To do later
 ```
+
+# Eventually
