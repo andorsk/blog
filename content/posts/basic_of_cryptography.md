@@ -53,6 +53,12 @@ understand "how do I use this".
   - [Introduction](#introduction-1)
   - [Elementary Probability Theory](#elementary-probability-theory)
   - [Perfect Secrecy](#perfect-secrecy)
+  - [One Time Pad](#one-time-pad)
+  - [Entropy](#entropy)
+    - [Properties of Entropy](#properties-of-entropy)
+  - [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
+- [Notes and References](#notes-and-references-2)
+  - [Exercises](#exercises-1)
 
 <!-- markdown-toc end -->
 
