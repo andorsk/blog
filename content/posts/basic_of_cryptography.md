@@ -41,12 +41,18 @@ understand "how do I use this".
     - [Permutations Cipher](#permutations-cipher)
     - [Stream Cipher](#stream-cipher)
     - [Autokey Cipher](#autokey-cipher)
-  - [CryptAnalysis](#cryptanalysis)
+  - [Cryptanalysis](#cryptanalysis)
     - [Affine Cipher](#affine-cipher-1)
+    - [Substitution Cipher](#substitution-cipher-1)
     - [Vigenere Cipher](#vigenere-cipher-1)
     - [Hill Cipher](#hill-cipher-1)
     - [LFSR Stream Cipher](#lfsr-stream-cipher)
   - [Notes and References](#notes-and-references-1)
+  - [Exercises](#exercises)
+- [Shannon’s Theory, Perfect Secrecy, and the One-Time Pad](#shannons-theory-perfect-secrecy-and-the-one-time-pad)
+  - [Introduction](#introduction-1)
+  - [Elementary Probability Theory](#elementary-probability-theory)
+  - [Perfect Secrecy](#perfect-secrecy)
 
 <!-- markdown-toc end -->
 
@@ -210,7 +216,7 @@ This method speeds up the drawbacks of slower public-key cryptosystems.
   where the following are satisfied:
   - \$P\$ is a finite set of plaintexts
   - \$C\$ is a finite set of ciphertexts
-  - \$K\$ is the keyspaceof possible keys
+  - \$K\$ is the key space of possible keys
   - For each \$K \in K\$, there is an encryption rule \$ e_K \in E \$ and a corresponding
     decryption ruled \$ d_K \in D \$.Each \$ e_K :P \to C\$ and \$ d_K :C \to P\$ are functions such that
     \$d_K(e_K(x)) = x \$for every plaintext element \$x \in P\$.
@@ -577,12 +583,270 @@ Oscar knows the crypto system being used as `Kerckhoffs’ Principle`.
   - There are other, weaker goals that the adversary could potentially achieve,
     even if a complete break is not possible.
 
+{{<table "table text-white table-bordered">}}
+| Letter | probability | Letter | probability |
+| ------ | ----------- | ------ | ----------- |
+| a | .082 | N | .067 |
+| b | .015 | O | .075 |
+| c | .028 | p | .019 |
+| d | .043 | q | .001 |
+| e | .127 | r | .06 |
+| .. | .. | .. | .. |
+| m | .024 | z | 0.01 |
+{{</table>}}
+
 #### Affine Cipher
+
+Cyphertext probabilities
+
+{{<table "table text-white table-bordered">}}
+| Letter | freq | Letter | freq |
+| ------ | ---- | ------ | ---- |
+| a | 2 | N | 1 |
+| b | 1 | O | 1 |
+| c | 0 | p | 2 |
+| d | 7 | q | 0 |
+| e | 5 | r | 8 |
+| .. | | .. | |
+| m | 2 | z | 0 |
+{{</table>}}
+
+- System of equations and allowable gcd to solve
+
+#### Substitution Cipher
+
+- statistical basis and pattern recognition for looking at consecutive characters
 
 #### Vigenere Cipher
 
+- Find the keyword length m.
+- Kasiski test: two identical segments of plaintext will be encrypted to the
+  same ciphertext whenever their occurrence in the plaintext is \$\delta\$
+  positions apart, where \$\delta \equiv 0\$(mod m)
+  - incidence of coincidence
+- find pattern, look at length, then that gives keylength
+
+```todo
+more review
+```
+
 #### Hill Cipher
+
+- hard at cipher-text attack
+- fails at plain text attacks
+  - given both, you can just compute the inverse
 
 #### LFSR Stream Cipher
 
+- compute the keystream bits from the plaintext + ciphertext
+- needs to know the stage
+- convert to a matrix, and solve
+
 ### Notes and References
+
+- Decrypted Secrets: Methods and Maxims of Cryptology: by Friedrich Bauer
+- Code Breaking A History and Exploration: by Rudolf Kippenhahn
+- Basic Methods of Cryptography: Jan van der Lubbe
+- Elementary Number Theory, 7th Edition David Burton
+- Linear Algebra and Its Applications, 5th Edition: David Lay, Steven Lay, and Judi McDonald
+- The Codebreakers: The Comprehensive History of Secret Communication from Ancient Times to the Internet by David Kahn
+- The Code Book: The Science of Secrecy from Ancient Egypt to Quantum Cryptography: Simon Singh
+
+### Exercises
+
+```todo
+To do later
+```
+
+## Shannon’s Theory, Perfect Secrecy, and the One-Time Pad
+
+### Introduction
+
+- **computational security:** We might define a cryptosystem to be
+  computationally secure if the best algorithm for breaking it requires at least
+  $N$ operations, where N is some specified, very large number.
+- **provable security:** If the cryptosystem can be “broken” in some specific
+  way, then it would be possible to efficiently solve some well- studied problem
+  that is thought to be difficult
+- **unconditional security:** A cryptosystem is defined to be unconditionally secure if
+  it cannot be broken, even with infinite computational resources.
+
+### Elementary Probability Theory
+
+```definition
+A discrete random variable, say $X$, consists of a finite set $X$ and a probability distribution defined on $X$. The probability that the random variable $X$ takes on the value x is denoted $\textbf{Pr}[\textbf{X} = x]$; sometimes we will abbreviate this to $\textbf{Pr}[x]$ if the random variable $X$ is fixed. It must be the case that $0 \leq \textbf{Pr}[x] : \forall x \in X$, and
+<div class="equation">
+$\sum_{x \in X}\textbf{Pr}[x] = 1$
+</div>
+```
+
+- Joint Probability: \$ P\[x,y\] = P\[x|y\]P[y\] = P\[y|x\]Pr\[x\] \$
+- Bayes theorem: \$ P\[y\] > 0\$ then \$P\[x|y\] = \frac{P\[x\]P\[y|x\]}{P\[y\]} \$
+
+### Perfect Secrecy
+
+- \$P\$ = probability distribution on the plaintext space. Thus the plaintext element defines a random variable, denoted x.
+- We denote the a priori probability that plaintext x occurs by Pr[x = x]
+- We also assume that the key K is chosen (by Alice and Bob) using some fixed
+  probability distribution ( normally at random ).
+- Denote the probability that key K is chosen by Pr[K = K].
+- induce probably distribution \$C\$. Cipher text can considered a random
+  varaible y.
+- To compute the proabiliy Pr[y=y]a ( y is the cipher text transmitted ). For a
+  key \$k \in K\$ defined:
+  {{< equation  >}}
+  C(K) = {eK(x) : x ∈ P}
+  {{< /equation >}}
+- \${C(K)}\$ represents a set of cipher texts if K is key
+- then:{{< equation  >}}
+  Pr[y = y] = \sum{Pr[K = K]Pr[x = d_K(y)]}.
+  {{< /equation >}}
+- compute the conditional probabiity:
+  {{< equation  >}}
+  Pr[y = y|x = x] = \sum{Pr[K = K]}
+  {{< /equation >}}
+- then compute the conditional probability that given x is the plaintext given y
+  is the cyphertext:
+  {{< equation  >}}
+  Pr[x = y|y = x] = \frac{P[x=x] \times \sum{P[K=k]}}{\sum{P[K=k]P[x=d_k(y)]}}
+  {{< /equation >}}
+
+```definition
+A cryptosystem has perfect secrecy if $Pr[x|y] = Pr[x]$ for all $x \in P, y \in C$.
+That is, the a posteriori probability that the plaintext is x, given that the
+ciphertext $y$ is observed, is identical to the a priori probability that the plaintext is $x$.
+```
+
+- Shift Cipher is “unbreakable” provided that a new random key is used to
+  encrypt every plaintext character.
+
+```todo
+revisit
+```
+
+### One Time Pad
+
+```definition
+Let $n \geq 1$ be an integer, and take $P = C = K = \mathbb{Z}_2^n$. For $K \in (\mathbb{Z}_{2})^n$,
+define $e_K(x)$ to be the vector sum modulo 2 of K and x (or, equivalently,
+the exclusive or of the two associated bitstrings).
+So, if $x = (x_1, . . . , x_n)$ and $K = (K_1, . . . ,K_n)$, then
+
+<div class="equation">
+$e_K(x) = (x_1 + K_1, . . . , x_n + K_n)$ mod 2
+</div>
+Decryption is identical to encryption. If $y = (y_1, . . . , y_n)$, then
+
+<div class="equation">
+  $dK(y) = (y_1 + K_1, . . . , y_n + K_n)$ mod 2
+</div>
+```
+
+- 1917 algo that automatic encryption and decryption of telegraph messages
+- thought unbreakable until Shannon created perfect secrecy
+- downside \$|K| \geq |P|\$ requires the amount of key must be at least as big
+  as the plaintext.
+  - n bits for n plaintext
+  - only used one time
+- One-time Pad is vulnerable to a known-plaintext attack, since K can be
+  computed as the exclusive-or of the bitstrings x and eK(x)
+- in some cases, such as military or diplomatic security, OTP might be used.
+
+### Entropy
+
+- Shannon introduce entropy in 1948
+- This quantity is called the entropy of X and is denoted by H(X).
+
+```definition
+Suppose X is a discrete random variable that takes on values from a finite set
+X. Then, the entropy of the random variable X is defined to be the quantity
+
+<div class="equation">
+$H(X)= − \sum{Pr[x] log_2 Pr[x]}$.
+</div>
+```
+
+#### Properties of Entropy
+
+```definition
+A real-valued function $f$ is a <b>concave function</b> on an interval $I$ if
+<div class="equation">
+$f \left(\frac{x+y}{2}\right) \geq \frac{f(x)+f(y)}{2}$
+</div>
+for all $x,y \in I $ $f$. $f$ is a <b>strictly concave function</b> on an interval $I$
+<div class="equation">
+$f \left(\frac{x+y}{2}\right) \gt \frac{f(x)+f(y)}{2}$
+</div>
+for all $x, y \in I, x  \ne y$.
+```
+
+{{< equation >}}
+\textbf{Jensen's Inequality:} \\
+\sum{a_if(x_i) \leq f\left(\sum(a_ix_i)\right)}
+{{< /equation >}}
+
+```definition
+Suppose X and Y are two random variables.
+Then for any fixed value y of Y, we get a (conditional) probability distribution on X;
+we denote the associated random variable by X|y.
+<div class="equation">
+  $H(X|y) = - \sum{Pr[x|y] log2 Pr[x|y]}$
+</div>
+We define the conditional entropy, denoted H(X|Y),
+to be the weighted average (with respect to the probabilities Pr[y])
+of the entropies H(X|y) over all possible values y. It is computed to be
+<div class="equation">
+  $H(X|Y) = − \sum_y \sum_x Pr[y]Pr[x|y] log2 Pr[x|y]$
+</div>
+The conditional entropy measures the average amount of information about X that is not revealed by Y.
+
+```
+
+### Spurious Keys and Unicity Distance
+
+- The conditional entropy H(K|C) is called the key equivocation; it is a measure
+  of the amount of uncertainty of the key remaining when the ciphertext is
+  known.
+- In a cryptosystem
+  {{< equation >}}
+  H(K|C) = H(K) + H(P) − H(C)
+  {{< /equation >}}
+  {{< equation >}}
+  H(K, P, C) = H(K, P) = H(K) + H(P).
+  {{< /equation >}}
+  {{< equation >}}
+  H(K|C) = H(K) + H(P) − H(C)
+  {{< /equation >}}
+- The remaining possible, but incorrect, keys are called spurious keys
+
+```definition
+Suppose $L$ is a natural language. The entropy of $L$ is defined
+to be the quantity
+<div class="equation">
+$H_L = \lim_{n \to \inf}\frac{H(P^n)}{n}$
+</div>
+ and the redundancy of L is defined to be
+ <div class="equation">
+ $R_L = 1 - \frac{H_L}{\log_2|P|}$
+ </div>
+```
+
+- Estimate of HL gives a redundancy of about 0.75. This means that the English language is 75% redundant!
+
+```definition
+The unicity distance of a cryptosystem is defined to be the value of n, denoted by $n_0$,
+at which the expected number of spurious keys becomes zero;
+i.e., the average amount of ciphertext required for an opponent to be
+able to uniquely compute the key, given enough computing time.
+```
+
+## Notes and References
+
+- Codes and Cryptography by Dominic Welsh
+- Communication Theory by Charles Goldie and Richard Pinch
+
+### Exercises
+
+```todo
+To do later
+```
