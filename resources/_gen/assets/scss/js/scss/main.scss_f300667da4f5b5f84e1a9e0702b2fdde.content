@@ -162,13 +162,15 @@ h3:before {
     stroke: white !important; }
   .mermaid .node rect {
     fill: white !important; }
+  .mermaid .nodeLabel {
+    color: #393e46 !important; }
   .mermaid .note {
     fill: #cc9999 !important;
     stroke: none !important;
     stroke-color: black !important;
     stroke-width: 2px !important; }
   .mermaid .cluster rect {
-    fill: white !important; }
+    fill: #282a3a !important; }
   .mermaid .edgePaths path {
     stroke: white !important;
     fill: none !important; }
@@ -220,3 +222,9 @@ blockquote p {
   text-align: center; }
   .todo .label {
     color: grey; }
+
+.note {
+  border-left: 1px solid #cc9999; }
+  .note .label {
+    border-radius: 25px;
+    background: #73ad21; }

@@ -986,4 +986,48 @@ n_0 \approx \frac{88.4}{.74 x 4.7} \approx 25
 To do later
 ```
 
-# Eventually
+## Block Ciphers and Stream Ciphers
+
+### Introduction
+
+- most block ciphers incorporate a sequence of permutation and substitution operations
+- _iterated cipher_, _round function_, _key schedule_. encryption of a plaintext will proceed through N similar rounds.
+- Let \$K\$ be a random binary key of some specified length. Use K to construct
+  $N$ round keys ( subkeys ), denoted by \$K^1,...,K^N\$. The list of round keys
+  \$(K^1,...,K^N)\$ is the key schedule. The key schedule is constructed from K
+  using a public algorithm.
+  \$g(K^\gamma, w^{gamma-1})\$ is the round function. The next state is \$ wr =
+  g(w^{\gamma−1}, K^{\gamma}) \$. Initial state is \$w^0=x\$. Ciphertext y is
+  defined as the state after N rounds are performed.
+
+{{< equation >}}
+w^0 \leftarrow x
+{{</equation>}}
+
+{{< equation >}}
+w^1 \leftarrow g(w^0,K^1)
+{{</equation>}}
+
+{{< equation >}}
+w^2 \leftarrow g(w^1,K^2)
+{{</equation>}}
+
+{{< equation >}}
+y \leftarrow g(w^N)
+{{</equation>}}
+
+- g must be injective for encryption
+- \$g^{-1}(g(w, y), y) = w\$
+- Do the above, in reverse
+
+#### Substitution-Permutation Networks
+
+- A substitution-permutation network(SPN).
+- special type of iterative cipher
+- P and C are binary vectors of length lm (block length of the cipher)
+- SPN built using:
+- permute box: \$ \pi\_{P} : | 1,...,lm| \to |1,...,lm| \$
+- substitute box: \$ \pi_S : | {0,1}^l | \to | {0,1}^l| \$
+- x-ors with subkeys
+- whitening, a useful way to prevent an attacker from even beginning to carry
+  out an encryption or decryption operation if the key is not known.
