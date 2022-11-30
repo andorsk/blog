@@ -25,7 +25,7 @@ theme = "emacsTheme"
     url = "/scope"
     weight = 4
   [[menu.main]]
-    name = "andor"
+    name = "About Me"
     pre = "user"
     url = "/about_me"
     weight = 5
