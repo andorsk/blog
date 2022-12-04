@@ -16,123 +16,66 @@ understand "how do I use this".
 <!-- more -->
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-
 **Table of Contents**
 
 - [Introduction To Cryptography](#introduction-to-cryptography)
-  - [Basic Crypto Systems](#basic-crypto-systems)
-    - [Hybrid Cryptography](#hybrid-cryptography)
-  - [Message Integrity](#message-integrity)
-    - [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
-    - [Signature Schemes](#signature-schemes)
-    - [Nonrepudiation](#nonrepudiation)
-    - [Certificates](#certificates)
-    - [Hashing](#hashing)
-  - [Cryptographic Protocols](#cryptographic-protocols)
-  - [Security](#security)
-  - [Notes and References](#notes-and-references)
+- [Basic Crypto Systems](#basic-crypto-systems)
+- [Hybrid Cryptography](#hybrid-cryptography)
+- [Message Integrity](#message-integrity)
+- [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
+- [Signature Schemes](#signature-schemes)
+- [Nonrepudiation](#nonrepudiation)
+- [Certificates](#certificates)
+- [Hashing](#hashing)
+- [Cryptographic Protocols](#cryptographic-protocols)
+- [Security](#security)
+- [Notes and References](#notes-and-references)
 - [Classical Cryptography](#classical-cryptography)
-  - [Introduction](#introduction)
-    - [Shift Cipher](#shift-cipher)
-    - [Substitution Cipher](#substitution-cipher)
-    - [Affine Cipher](#affine-cipher)
-    - [Vigenere Cipher](#vigenere-cipher)
-    - [Hill Cipher](#hill-cipher)
-    - [Permutations Cipher](#permutations-cipher)
-    - [Stream Cipher](#stream-cipher)
-    - [Autokey Cipher](#autokey-cipher)
-  - [Cryptanalysis](#cryptanalysis)
-    - [Affine Cipher](#affine-cipher-1)
-    - [Substitution Cipher](#substitution-cipher-1)
-    - [Vigenere Cipher](#vigenere-cipher-1)
-    - [Hill Cipher](#hill-cipher-1)
-    - [LFSR Stream Cipher](#lfsr-stream-cipher)
-  - [Notes and References](#notes-and-references-1)
-  - [Exercises](#exercises)
+- [Introduction](#introduction)
+- [Shift Cipher](#shift-cipher)
+- [Substitution Cipher](#substitution-cipher)
+- [Affine Cipher](#affine-cipher)
+- [Vigenere Cipher](#vigenere-cipher)
+- [Hill Cipher](#hill-cipher)
+- [Permutations Cipher](#permutations-cipher)
+- [Stream Cipher](#stream-cipher)
+- [Autokey Cipher](#autokey-cipher)
+- [Cryptanalysis](#cryptanalysis)
+- [Affine Cipher](#affine-cipher-1)
+- [Substitution Cipher](#substitution-cipher-1)
+- [Vigenere Cipher](#vigenere-cipher-1)
+- [Hill Cipher](#hill-cipher-1)
+- [LFSR Stream Cipher](#lfsr-stream-cipher)
+- [Notes and References](#notes-and-references-1)
+- [Exercises](#exercises)
 - [Shannon’s Theory, Perfect Secrecy, and the One-Time Pad](#shannons-theory-perfect-secrecy-and-the-one-time-pad)
-  - [Introduction](#introduction-1)
-  - [Elementary Probability Theory](#elementary-probability-theory)
-  - [Perfect Secrecy](#perfect-secrecy)
-  - [One Time Pad](#one-time-pad)
-  - [Entropy](#entropy)
-    - [Properties of Entropy](#properties-of-entropy)
-  - [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
-  - [Notes and References](#notes-and-references-2)
-  - [Exercises](#exercises-1)
-- [Block and Stream Ciphers](#block-and-stream-ciphers)
-  - [Introduction](#introduction-2)
-  - [Substitution-Permutation Networks](#substitution-permutation-networks)
-  - [Linear Cryptanalysis](#linear-cryptanalysis)
-    - [The Piling-up Lemma](#the-piling-up-lemma)
-    - [Linear Approximations of S-boxes](#linear-approximations-of-s-boxes)
-    - [A Linear Attack on an SPN](#a-linear-attack-on-an-spn)
-  - [Differential Cryptanalysis](#differential-cryptanalysis)
-  - [The Data Encryption Standard](#the-data-encryption-standard)
-    - [Description of DES](#description-of-des)
-    - [Analysis of DES](#analysis-of-des)
-  - [The Advanced Encryption Standard](#the-advanced-encryption-standard)
-    - [Description of AES](#description-of-aes)
-    - [Analysis of AES](#analysis-of-aes)
-  - [Modes of Operation](#modes-of-operation)
-    - [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
-  - [Stream Ciphers](#stream-ciphers)
-    - [Correlation Attack on a Combination Generator](#correlation-attack-on-a-combination-generator)
-    - [Algebraic Attack on a Filter Generator](#algebraic-attack-on-a-filter-generator)
-  - [Notes and References](#notes-and-references-3)
-- [Hash Functions and Message Authentication](#hash-functions-and-message-authentication)
-  - [Hash Functions and Data Integrity](#hash-functions-and-data-integrity)
-  - [Security of Hash Functions](#security-of-hash-functions)
-    - [The Random Oracle Model](#the-random-oracle-model)
-    - [Algorithms in the Random Oracle Model](#algorithms-in-the-random-oracle-model)
-    - [Comparison of Security Criteria](#comparison-of-security-criteria)
-  - [Iterated Hash Functions](#iterated-hash-functions)
-    - [The Merkle-Damgard Construction](#the-merkle-damgard-construction)
-    - [Some Examples of Iterated Hash Functions](#some-examples-of-iterated-hash-functions)
-  - [The Sponge Construct](#the-sponge-construct)
-    - [SHA-3](#sha-3)
-  - [Message Authentication Codes](#message-authentication-codes)
-    - [Nested MACs and HMAC](#nested-macs-and-hmac)
-    - [CBC-MAC](#cbc-mac)
-    - [Authenticated Encryption](#authenticated-encryption)
-  - [Unconditionally Secure MACs](#unconditionally-secure-macs)
-    - [Strongly Universal Hash Families](#strongly-universal-hash-families)
-    - [Optimality of Deception Probabilities](#optimality-of-deception-probabilities)
-  - [Notes and References](#notes-and-references-4)
-- [The RSA Cryptosystem and Factoring Integers](#the-rsa-cryptosystem-and-factoring-integers)
-  - [Introduction to Public-key Cryptography](#introduction-to-public-key-cryptography)
-  - [More Number Theory](#more-number-theory)
-    - [The Euclidean Algorithm](#the-euclidean-algorithm)
-    - [The Chinese Remainder Theorem](#the-chinese-remainder-theorem)
-  - [The RSA Cryptosystem](#the-rsa-cryptosystem)
-    - [Implementing RSA](#implementing-rsa)
-  - [Primality Testing](#primality-testing)
-    - [Legendre and Jacobi Symbols](#legendre-and-jacobi-symbols)
-    - [The Solovay-Strassen Algorithm](#the-solovay-strassen-algorithm)
-    - [The Miller-Rabin Algorithm](#the-miller-rabin-algorithm)
-  - [Square Roots Modulo n](#square-roots-modulo-n)
-  - [Factoring Algorithms](#factoring-algorithms)
-    - [The Pollard p − 1 Algorithm](#the-pollard-p--1-algorithm)
-    - [The Pollard Rho Algorithm](#the-pollard-rho-algorithm)
-    - [Dixon’s Random Squares Algorithm](#dixons-random-squares-algorithm)
-  - [Other Attacks on RSA](#other-attacks-on-rsa)
-    - [Computing φ(n)](#computing-φn)
-    - [The Decryption Exponent](#the-decryption-exponent)
-    - [Wiener's Low Decryption Exponent Attack](#wieners-low-decryption-exponent-attack)
-  - [The Rabin Cryptosystem](#the-rabin-cryptosystem)
-    - [Security of the Rabin Cryptosystem](#security-of-the-rabin-cryptosystem)
-  - [Semantic Security of RSA](#semantic-security-of-rsa)
-    - [Partial Information Concerning Plaintext Bits](#partial-information-concerning-plaintext-bits)
-    - [Obtaining Semantic Security](#obtaining-semantic-security)
-  - [Notes and References](#notes-and-references-5)
-- [Public-Key Cryptography and Discrete Logarithms](#public-key-cryptography-and-discrete-logarithms)
-- [Signature Schemes](#signature-schemes-1)
-- [Post Quantum Cryptography](#post-quantum-cryptography)
-- [Identification Schemes and Entity Authentication](#identification-schemes-and-entity-authentication)
-- [Key Distribution](#key-distribution)
-- [Key Agreement Schemes](#key-agreement-schemes)
-- [Miscellaneous Topics](#miscellaneous-topics)
-- [Number Theory and Algebraic Concepts for Cryptography](#number-theory-and-algebraic-concepts-for-cryptography)
-- [Psudorandom Bit Generation for Cryptography](#psudorandom-bit-generation-for-cryptography)
+- [Introduction](#introduction-1)
+- [Elementary Probability Theory](#elementary-probability-theory)
+- [Perfect Secrecy](#perfect-secrecy)
+- [One Time Pad](#one-time-pad)
+- [Entropy](#entropy)
+- [Properties of Entropy](#properties-of-entropy)
+- [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
+- [Notes and References](#notes-and-references-2)
+- [Exercises](#exercises-1)
+- [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
+- [Introduction](#introduction-2)
+- [Substitution-Permutation Networks](#substitution-permutation-networks)
+- [Cryptanalysis](#cryptanalysis-1)
+- [Linear Approximation of S Boxes](#linear-approximation-of-s-boxes)
+- [Linear Attack on SPN](#linear-attack-on-spn)
+- [Differential Crypt Analysis](#differential-crypt-analysis)
+- [Data Encryption Standard (DES)](#data-encryption-standard-des)
+- [Description of DES](#description-of-des)
+- [Advanced Encryption Standard](#advanced-encryption-standard)
+- [Description of AES](#description-of-aes)
+- [Modes of Operation](#modes-of-operation)
+- [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
+- [Stream Ciphers](#stream-ciphers)
+- [Correlation Atack on Combination Generator](#correlation-atack-on-combination-generator)
+- [Algebric Attack on Filter Generator](#algebric-attack-on-filter-generator)
+- [Trivium](#trivium)
+- [Notes and References](#notes-and-references-3)
 
 <!-- markdown-toc end -->
 
@@ -1031,3 +974,402 @@ y \leftarrow g(w^N)
 - x-ors with subkeys
 - whitening, a useful way to prevent an attacker from even beginning to carry
   out an encryption or decryption operation if the key is not known.
+- lm = block length
+
+```python
+def chunk(n, w, s):
+    '''chunks bins into windows'''
+    n = hex(n)[2:]
+    return [bin(int(f, base=16))[2:].zfill(4) for f in n]
+
+def make_round_keys(n,w,s):
+    '''makes round keys from seed'''
+    splits = chunk(k, w, s)
+    keys = []
+    for i in range(5):
+        keys.append(splits[i:i+4])
+    return keys
+
+# subtitute keys
+piS = {
+    0x0: 0xe,
+    0x1: 0x4,
+    0x2: 0xD,
+    0x3: 0x1,
+    0x4: 0x2,
+    0x5: 0xF,
+    0x6: 0xB,
+    0x7: 0x8,
+    0x8: 0x3,
+    0x9: 0xA,
+    0xa: 0x6,
+    0xb: 0xC,
+    0xc: 0x5,
+    0xd: 0x9,
+    0xe: 0x0,
+    0xf: 0x7
+}
+
+# permute keys
+piP = [1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16]
+
+def fpP(i):
+    '''permutation function'''
+    return piP[i]
+
+def fpS(v):
+    '''substitution function'''
+    return piS[v]
+
+def spn(keys, pP, pS, plaintext):
+    '''
+    TODO: refactor this. works though
+    keys: round keys
+    pP: permutation function
+    pS: substitution function
+    plaintext: input
+    '''
+    w = chunk(plaintext, 4, 4) # chunk the plaintext into 4 bits each
+
+    for i in range(len(keys)-1):
+        k,u,v= keys[i],[],[]
+        [ u.append(int(w[i], 2) ^ int(k[i], 2)) for i in range(len(w)) ] # xor
+        against keys
+        v = ''
+        for u1 in u:
+            v += '{}'.format(bin(pS(int(u1)))[2:].zfill(4)) # substitute
+        w1 = ''
+        for i in range(len(v)):
+            w1 += str(v[pP(i)-1])  # permute against keys
+        w2 = int(w1,2)
+        if i == 3: # final step, you break
+            break
+        w = chunk(w2, 4, 4) # chunk
+    k = keys[4]
+    y = bin(int(''.join(k),2) ^ int(v, 2)) #whitening step
+    return y[2:]
+
+k = 0x3a94d63f
+w = 4
+s = 4
+
+rk = make_round_keys(k,w,s)
+return spn(rk, fpP, fpS, 0x26B7)
+
+# under assumption l == m == N == 4
+#result : 1011110011010110
+```
+
+### Cryptanalysis
+
+#### Linear Approximation of S Boxes
+
+- might be possible to find a probabilistic linear relationship between subset
+  of plaintexts bits and subset state bits proceeding substitution last round
+- piling up lemma : bias of random varibles
+- \$[PR\[X = 1\]=\frac{1}{2} - \epsilon_j]\$ and \$[PR\[X = 1\]=\frac{1}{2} + \epsilon_j]\$
+- find linear approximation on an spn
+
+#### Linear Attack on SPN
+
+```python
+def linear_attack(tao, t, pi_s_inv):
+    '''TODO'''
+```
+
+#### Differential Crypt Analysis
+
+```todo
+REVISIT
+```
+
+### Data Encryption Standard (DES)
+
+- Founded by NIST in 1973
+
+#### Description of DES
+
+- DES is a special type of cipher called Feistel cipher
+- \$L^i = R^{i-1}\$
+- \$R^i = L^{i-1} \newcommand\*\xor{\oplus} f(R^{i-1}, K^i)\$
+- 16 round Feistel cipher with block length 64
+  - encrypts plaintext bitstring x using 56 bit key K
+  - generates y of 64 length
+  - prior: initial permutation applied (IP): \$IP(x) = L^0R^0\$
+
+```mermaid
+graph TD
+    Li[l]
+    Li1[l-1]
+    Plus[+]
+    F[f]
+    Ki[k]
+    Ri[r]
+    Ri1[r-1]
+    Li1 --> Plus
+    Ri1 --> Li
+    Plus --> Ri
+    Ki --> F
+    Ri1 --> F
+    Li <--> Ri
+    Ri1 <--> Li1
+    F --> Plus
+```
+
+- After 16 rounds of encyption, the inverse permutation is applied.
+- \$y = IP^-1(R^{16}L^{16})\$
+
+**DES Architecture**
+
+```mermaid
+graph TD
+    A --> E(e)
+    E --> ea[Ea]
+    ea --> p[+]
+    J --> p
+    subgraph B
+        b1
+        b2
+        b3
+        b4
+        b5
+        b6
+        b7
+        b8
+    end
+
+    p --> B
+
+    subgraph S
+        s1
+        s2
+        s3
+        s4
+        s5
+        s6
+        s7
+        s8
+    end
+
+    b1 --> s1
+    b2 --> s2
+    b3 --> s3
+    b4 --> s4
+    b5 --> s5
+    b6 --> s6
+    b7 --> s7
+    b8 --> s8
+
+    subgraph C
+        c1
+        c2
+        c3
+        c4
+        c5
+        c6
+        c7
+        c8
+    end
+
+    s1 --> c1
+    s2 --> c2
+    s3 --> c3
+    s4 --> c4
+    s5 --> c5
+    s6 --> c6
+    s7 --> c7
+    s8 --> c8
+
+    C --> P(P)
+    P --> ff[Faj]
+
+```
+
+- S Boxes provide non-linearity, and DES only uses S-boxes for non-linearity
+- Design criteria: crypt analysis infeasible
+- Differential cryptanalysis was known to IBM researchers at the time that DES
+  was being developed, but it was kept secret for almost 20 years, until Biham
+  and Shamir independently discovered the attack.
+- small keyspace (2^56)
+- Wiener’s machine was never built, but a key search machine costing $250,000
+  was built in 1998 by the Electronic Frontier Foundation.
+- This co-operative effort found a DES key in 22 hours, 15 minutes, testing over
+  245 billion keys per second.
+- More recently, crack.sh has built a special-purpose key search device consist-
+  ing of 48 FPGAs that can exhaustively search all 256 possible DES keys in 26
+  hours.
+- In the case of DES, linear cryptanalysis is the more efficient of the two
+  attacks, and an actual implementation of linear cryptanalysis was carried out
+  in 1994 by its inventor, Matsui.
+- unlikely to have any impact
+
+### Advanced Encryption Standard
+
+- Replacement for DES
+- It was required that the AES have a block length of 128 bits and support key
+  lengths of 128, 192, and 256 bits.
+- AES candidates were evaluated for their suitability according to three main criteria
+  - cost
+  - security
+  - algorithm and implementation characteristics
+- Rijndael was selected
+
+#### Description of AES
+
+- Block length: 128
+- Key Lengths: 128, 192, 256
+- number of rounds depends on the key length
+- N = 10 if l = 128 12 at 192 and 14 at 256
+- Steps:
+  - initialize state. perform add round key xor rk and state
+  - subbytes op for N-1 rounds on state using s box.
+    - permutation of shift rows, mixcolumns, addroundkey
+    - Perform SUBBYTES; perform SHIFTROWS; and perform ADDROUNDKEY.
+    - ciphertext y to state
+
+```bash
+external FIELDINV,BINARYTOFIELD,FIELDTOBINARY z ← BINARYTOFIELD(a7a6a5a4a3a2a1a0)
+if z ̸= 0
+then z ← FIELDINV(z)
+(a7a6a5a4a3a2a1a0) ← FIELDTOBINARY(z)
+(c7c6c5c4c3c2c1c0) ← (01100011)
+comment: In the following loop, all subscripts are to be reduced modulo 8
+for i ← 0 to 7
+dobi ←(ai+ai+4+ai+5+ai+6+ai+7+ci)mod2
+return (b7b6b5b4b3b2b1b0)
+```
+
+- similar to SPN
+- AES is larger and includes additional transformation of mix-columns
+- state: 4x4 array of bytes
+  - initially defined as 16 bytes of pt
+
+{{<table "table text-white table-bordered">}}
+| | | | |
+| ------ | ----------- | ------ | ----------- |
+| \$s*{0,0}\$ | \$s*{0,1}\$ | \$s*{0,2}\$ | \$s*{0,3}\$ |
+| \$s*{1,0}\$ | \$s*{1,1}\$ | \$s*{1,2}\$ | \$s*{1,3}\$ |
+| \$s*{2,0}\$ | \$s*{2,1}\$ | \$s*{2,2}\$ | \$s*{2,3}\$ |
+| \$s*{3,0}\$ | \$s*{3,1}\$ | \$s*{3,2}\$ | \$s*{3,3}\$ |
+{{</table>}}
+
+Initial state:
+{{<table "table text-white table-bordered">}}
+| | | | |
+| ------ | ----------- | ------ | ----------- |
+| \$x*{0}\$ | \$x*{4}\$ | \$x*{8}\$ | \$x*{12}\$ |
+| \$x*{1}\$ | \$x*{5}\$ | \$x*{9}\$ | \$x*{13}\$ |
+| \$x*{2}\$ | \$x*{6}\$ | \$x*{10}\$ | \$x*{14}\$ |
+| \$x*{3}\$ | \$x*{7}\$ | \$x*{11}\$ | \$x*{15}\$ |
+{{</table>}}
+
+- SUBBYTES performs sub on each byte independently
+
+{{<html "table text-white table-bordered">}}
+
+ <table class="center" style="font-size:80%;margin-left: auto; margin-right: auto;"><caption>AES S-box</caption><tbody><tr><th></th><th>00</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>0a</th><th>0b</th><th>0c</th><th>0d</th><th>0e</th><th>0f</th></tr><tr><th>00</th><td>63</td><td>7c</td><td>77</td><td>7b</td><td>f2</td><td>6b</td><td>6f</td><td>c5</td><td>30</td><td>01</td><td>67</td><td>2b</td><td>fe</td><td>d7</td><td>ab</td><td>76</td></tr><tr><th>10</th><td>ca</td><td>82</td><td>c9</td><td>7d</td><td>fa</td><td>59</td><td>47</td><td>f0</td><td>ad</td><td>d4</td><td>a2</td><td>af</td><td>9c</td><td>a4</td><td>72</td><td>c0</td></tr><tr><th>20</th><td>b7</td><td>fd</td><td>93</td><td>26</td><td>36</td><td>3f</td><td>f7</td><td>cc</td><td>34</td><td>a5</td><td>e5</td><td>f1</td><td>71</td><td>d8</td><td>31</td><td>15</td></tr><tr><th>30</th><td>04</td><td>c7</td><td>23</td><td>c3</td><td>18</td><td>96</td><td>05</td><td>9a</td><td>07</td><td>12</td><td>80</td><td>e2</td><td>eb</td><td>27</td><td>b2</td><td>75</td></tr><tr><th>40</th><td>09</td><td>83</td><td>2c</td><td>1a</td><td>1b</td><td>6e</td><td>5a</td><td>a0</td><td>52</td><td>3b</td><td>d6</td><td>b3</td><td>29</td><td>e3</td><td>2f</td><td>84</td></tr><tr><th>50</th><td>53</td><td>d1</td><td>00</td><td>ed</td><td>20</td><td>fc</td><td>b1</td><td>5b</td><td>6a</td><td>cb</td><td>be</td><td>39</td><td>4a</td><td>4c</td><td>58</td><td>cf</td></tr><tr><th>60</th><td>d0</td><td>ef</td><td>aa</td><td>fb</td><td>43</td><td>4d</td><td>33</td><td>85</td><td>45</td><td>f9</td><td>02</td><td>7f</td><td>50</td><td>3c</td><td>9f</td><td>a8</td></tr><tr><th>70</th><td>51</td><td>a3</td><td>40</td><td>8f</td><td>92</td><td>9d</td><td>38</td><td>f5</td><td>bc</td><td>b6</td><td>da</td><td>21</td><td>10</td><td>ff</td><td>f3</td><td>d2</td></tr><tr><th>80</th><td>cd</td><td>0c</td><td>13</td><td>ec</td><td>5f</td><td>97</td><td>44</td><td>17</td><td>c4</td><td>a7</td><td>7e</td><td>3d</td><td>64</td><td>5d</td><td>19</td><td>73</td></tr><tr><th>90</th><td>60</td><td>81</td><td>4f</td><td>dc</td><td>22</td><td>2a</td><td>90</td><td>88</td><td>46</td><td>ee</td><td>b8</td><td>14</td><td>de</td><td>5e</td><td>0b</td><td>db</td></tr><tr><th>a0</th><td>e0</td><td>32</td><td>3a</td><td>0a</td><td>49</td><td>06</td><td>24</td><td>5c</td><td>c2</td><td>d3</td><td>ac</td><td>62</td><td>91</td><td>95</td><td>e4</td><td>79</td></tr><tr><th>b0</th><td>e7</td><td>c8</td><td>37</td><td>6d</td><td>8d</td><td>d5</td><td>4e</td><td>a9</td><td>6c</td><td>56</td><td>f4</td><td>ea</td><td>65</td><td>7a</td><td>ae</td><td>08</td></tr><tr><th>c0</th><td>ba</td><td>78</td><td>25</td><td>2e</td><td>1c</td><td>a6</td><td>b4</td><td>c6</td><td>e8</td><td>dd</td><td>74</td><td>1f</td><td>4b</td><td>bd</td><td>8b</td><td>8a</td></tr><tr><th>d0</th><td>70</td><td>3e</td><td>b5</td><td>66</td><td>48</td><td>03</td><td>f6</td><td>0e</td><td>61</td><td>35</td><td>57</td><td>b9</td><td>86</td><td>c1</td><td>1d</td><td>9e</td></tr><tr><th>e0</th><td>e1</td><td>f8</td><td>98</td><td>11</td><td>69</td><td>d9</td><td>8e</td><td>94</td><td>9b</td><td>1e</td><td>87</td><td>e9</td><td>ce</td><td>55</td><td>28</td><td>df</td></tr><tr><th>f0</th><td>8c</td><td>a1</td><td>89</td><td>0d</td><td>bf</td><td>e6</td><td>42</td><td>68</td><td>41</td><td>99</td><td>2d</td><td>0f</td><td>b0</td><td>54</td><td>bb</td><td>16</td></tr><tr></td></tr></tbody></table>
+{{</html>}}
+
+{{< equation  >}}
+\mathbb{F}\_{2^{8}} = \mathbb{Z}\_2[x] / (x^8 + x^4 + x^3 + x + 1)
+{{< /equation >}}
+
+**MIXCOLUMN(c)**
+
+```definition
+external FIELDMULT,BINARYTOFIELD,FIELDTOBINARY for i ← 0 to 3
+do ti ← BINARYTOFIELD(si,c)
+u0 ← FIELDMULT(x, t0) ⊕ FIELDMULT(x + 1, t1) ⊕ t2 ⊕ t3 u1 ← FIELDMULT(x, t1) ⊕ FIELDMULT(x + 1, t2) ⊕ t3 ⊕ t0 u2 ← FIELDMULT(x, t2) ⊕ FIELDMULT(x + 1, t3) ⊕ t0 ⊕ t1 u3 ← FIELDMULT(x, t3) ⊕ FIELDMULT(x + 1, t0) ⊕ t1 ⊕ t2 for i ← 0 to 3
+do si,c ← FIELDTOBINARY(ui)
+```
+
+**KEYEXPANSION(key)**
+
+```
+external ROTWORD,SUBWORD RCon[1] ← 01000000
+RCon[2] ← 02000000
+RCon[3] ← 04000000
+RCon[4] ← 08000000 RCon[5] ← 10000000 RCon[6] ← 20000000 RCon[7] ← 40000000 RCon[8] ← 80000000 RCon[9] ← 1B000000 RCon[10] ← 36000000 for i ← 0 to 3
+do w[i] ← (key[4i], key[4i + 1], key[4i + 2], key[4i + 3]) for i ← 4 to 43
+temp ← w[i − 1]
+if i ≡ 0 (mod 4)
+ then temp ← SUBWORD(ROTWORD(temp)) ⊕ RCon[i/4] w[i] ← w[i − 4] ⊕ temp
+do
+return (w[0], . . . , w[43])
+```
+
+```todo
+review
+```
+
+### Modes of Operation
+
+- 4 modes with DES
+  - These modes of operation can be used (with minor changes) for any block
+    cipher in which the plaintext and ciphertext spaces are identical, i.e.,
+    whenever the block cipher is endomorphic
+    - electronic codebook mode(ECB mode),
+      - naive block cipher use ( never used )
+    - cipher block chaining mode(CBC mode),
+      - ciphertext block is xored
+      - can produce MAC
+    - output feedback mode(OFB mode)
+      - keystream xored. Sync stream cipher
+    - cipher feedback mode(CFB mode),
+      - async version of OFB
+    - counter mode(CTR mode)
+      - keystream is constructed differently
+      - choose a counter
+    - counter with cipher-block chaining MAC(CCM mode),and • Galois/counter mode(GCM).
+      - use counter with CBC
+    - GCM
+      - GCM is another mode used for authenticated encryption.
+
+#### Padding Oracle Attack on CBC Mode
+
+- It exploits the requirement for plaintext data to be “padded” so that its
+  length is a multiple of the block size before it is encrypted.
+  - A padding oracle attack refers to an attack model where the adversary is
+    allowed to submit ciphertext blocks to an “oracle” that reports if the
+    resulting plaintext is correctly padded (note that the actual plaintext is
+    not given to the adversary).
+  - The number of calls to the oracle is at most 16 × 256 = 4096.
+
+### Stream Ciphers
+
+- combination generator
+  - some number r
+  - LFSR generates keystream
+  - use boolean function o combine the r keystreams into a new keystreamvia
+    the rule. f is calld the combining function
+  - periods that are pairwise relatively prime
+- filter generator
+  - m stages
+  - apply a boolean function to inputs
+  - The output of the boolean function at any given time is a keystream bit.
+- shrinking generator
+  - two LSFRs
+  - second LSFR outputs 0, first LSFR discarded. if one the output of the first
+    LSFR is a keystream bit
+
+#### Correlation Atack on Combination Generator
+
+- correlation attacks
+- suppose the following combining function:
+  {{< equation  >}}
+  f(z_1, z_2, z_3) = (z_1 \bigwedge z_2) \newcommand*\xor{\oplus} (z_1
+  \bigwedge z_3) \newcommand*\xor{\oplus} (z_3 \bigwedge z_3)
+  {{ </equation> }}
+- using majority function P[z=zj] = 3/4
+- reduce combinations
+- check patterns
+
+#### Algebric Attack on Filter Generator
+asdf
+
+#### Trivium
+
+asdf
+### Notes and References
+
+adsf

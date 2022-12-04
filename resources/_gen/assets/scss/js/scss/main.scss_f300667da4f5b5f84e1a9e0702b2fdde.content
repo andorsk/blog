@@ -154,6 +154,8 @@ h3:before {
     justify-content: center;
     margin-right: auto;
     margin-left: auto; }
+  .mermaid .cluster .nodeLabel {
+    color: white !important; }
   .mermaid marker {
     fill: white !important; }
   .mermaid .messageText {
@@ -214,6 +216,11 @@ blockquote p {
 
 .equation {
   text-align: center !important; }
+
+table .center {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important; }
 
 .todo {
   display: block;
