@@ -1,5 +1,5 @@
 ---
-title: "Basic Of Cryptography"
+title: "My Notes on Cryptography"
 date: 2022-11-25T06:44:25+05:30
 tags: ["cryptography", "notes"]
 keywords: ["cryptography", "notes"]
@@ -19,63 +19,64 @@ understand "how do I use this".
 **Table of Contents**
 
 - [Introduction To Cryptography](#introduction-to-cryptography)
-- [Basic Crypto Systems](#basic-crypto-systems)
-- [Hybrid Cryptography](#hybrid-cryptography)
-- [Message Integrity](#message-integrity)
-- [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
-- [Signature Schemes](#signature-schemes)
-- [Nonrepudiation](#nonrepudiation)
-- [Certificates](#certificates)
-- [Hashing](#hashing)
-- [Cryptographic Protocols](#cryptographic-protocols)
-- [Security](#security)
-- [Notes and References](#notes-and-references)
+    - [Basic Crypto Systems](#basic-crypto-systems)
+        - [Hybrid Cryptography](#hybrid-cryptography)
+    - [Message Integrity](#message-integrity)
+        - [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
+        - [Signature Schemes](#signature-schemes)
+        - [Nonrepudiation](#nonrepudiation)
+        - [Certificates](#certificates)
+        - [Hashing](#hashing)
+    - [Cryptographic Protocols](#cryptographic-protocols)
+    - [Security](#security)
+    - [Notes and References](#notes-and-references)
 - [Classical Cryptography](#classical-cryptography)
-- [Introduction](#introduction)
-- [Shift Cipher](#shift-cipher)
-- [Substitution Cipher](#substitution-cipher)
-- [Affine Cipher](#affine-cipher)
-- [Vigenere Cipher](#vigenere-cipher)
-- [Hill Cipher](#hill-cipher)
-- [Permutations Cipher](#permutations-cipher)
-- [Stream Cipher](#stream-cipher)
-- [Autokey Cipher](#autokey-cipher)
-- [Cryptanalysis](#cryptanalysis)
-- [Affine Cipher](#affine-cipher-1)
-- [Substitution Cipher](#substitution-cipher-1)
-- [Vigenere Cipher](#vigenere-cipher-1)
-- [Hill Cipher](#hill-cipher-1)
-- [LFSR Stream Cipher](#lfsr-stream-cipher)
-- [Notes and References](#notes-and-references-1)
-- [Exercises](#exercises)
+    - [Introduction](#introduction)
+        - [Shift Cipher](#shift-cipher)
+        - [Substitution Cipher](#substitution-cipher)
+        - [Affine Cipher](#affine-cipher)
+        - [Vigenere Cipher](#vigenere-cipher)
+        - [Hill Cipher](#hill-cipher)
+        - [Permutations Cipher](#permutations-cipher)
+        - [Stream Cipher](#stream-cipher)
+        - [Autokey Cipher](#autokey-cipher)
+    - [Cryptanalysis](#cryptanalysis)
+        - [Affine Cipher](#affine-cipher-1)
+        - [Substitution Cipher](#substitution-cipher-1)
+        - [Vigenere Cipher](#vigenere-cipher-1)
+        - [Hill Cipher](#hill-cipher-1)
+        - [LFSR Stream Cipher](#lfsr-stream-cipher)
+    - [Notes and References](#notes-and-references-1)
+    - [Exercises](#exercises)
 - [Shannon’s Theory, Perfect Secrecy, and the One-Time Pad](#shannons-theory-perfect-secrecy-and-the-one-time-pad)
-- [Introduction](#introduction-1)
-- [Elementary Probability Theory](#elementary-probability-theory)
-- [Perfect Secrecy](#perfect-secrecy)
-- [One Time Pad](#one-time-pad)
-- [Entropy](#entropy)
-- [Properties of Entropy](#properties-of-entropy)
-- [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
-- [Notes and References](#notes-and-references-2)
-- [Exercises](#exercises-1)
+    - [Introduction](#introduction-1)
+    - [Elementary Probability Theory](#elementary-probability-theory)
+    - [Perfect Secrecy](#perfect-secrecy)
+    - [One Time Pad](#one-time-pad)
+    - [Entropy](#entropy)
+        - [Properties of Entropy](#properties-of-entropy)
+    - [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
+    - [Notes and References](#notes-and-references-2)
+    - [Exercises](#exercises-1)
 - [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
-- [Introduction](#introduction-2)
-- [Substitution-Permutation Networks](#substitution-permutation-networks)
-- [Cryptanalysis](#cryptanalysis-1)
-- [Linear Approximation of S Boxes](#linear-approximation-of-s-boxes)
-- [Linear Attack on SPN](#linear-attack-on-spn)
-- [Differential Crypt Analysis](#differential-crypt-analysis)
-- [Data Encryption Standard (DES)](#data-encryption-standard-des)
-- [Description of DES](#description-of-des)
-- [Advanced Encryption Standard](#advanced-encryption-standard)
-- [Description of AES](#description-of-aes)
-- [Modes of Operation](#modes-of-operation)
-- [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
-- [Stream Ciphers](#stream-ciphers)
-- [Correlation Atack on Combination Generator](#correlation-atack-on-combination-generator)
-- [Algebric Attack on Filter Generator](#algebric-attack-on-filter-generator)
-- [Trivium](#trivium)
-- [Notes and References](#notes-and-references-3)
+    - [Introduction](#introduction-2)
+        - [Substitution-Permutation Networks](#substitution-permutation-networks)
+    - [Cryptanalysis](#cryptanalysis-1)
+        - [Linear Approximation of S Boxes](#linear-approximation-of-s-boxes)
+        - [Linear Attack on SPN](#linear-attack-on-spn)
+        - [Differential Crypt Analysis](#differential-crypt-analysis)
+    - [Data Encryption Standard (DES)](#data-encryption-standard-des)
+        - [Description of DES](#description-of-des)
+    - [Advanced Encryption Standard](#advanced-encryption-standard)
+        - [Description of AES](#description-of-aes)
+    - [Modes of Operation](#modes-of-operation)
+        - [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
+    - [Stream Ciphers](#stream-ciphers)
+        - [Correlation Atack on Combination Generator](#correlation-atack-on-combination-generator)
+        - [Algebric Attack on Filter Generator](#algebric-attack-on-filter-generator)
+        - [Trivium](#trivium)
+    - [Notes and References](#notes-and-references-3)
+- [Hash Functions and Message Authentication](#hash-functions-and-message-authentication)
 
 <!-- markdown-toc end -->
 
@@ -1072,16 +1073,239 @@ return spn(rk, fpP, fpS, 0x26B7)
 
 #### Linear Attack on SPN
 
+- derive a linear approximation of S boxes
+- active S box approx
+- check if approx is satisfied
+- update freq table for all candidate keys
+- correct canditate key will have largest tally
+- if cipher is random, appox won't work
+  - lc is a distiguisher. determine if it's not random
+- bais = 2e1e2 for x1 ^ x2
+- check bias for xors with input and output i.e x1 ^ x4 ^ y1
+- \$(\oplus a_iX_i) \oplus (\oplus b_iY_i)\$
+- 16x16 table
+- check the # of times it matches
+
+**Example Linear Appox Table**
+{{<table "table text-white table-bordered">}}
+| 0 | 1 | 2 | ... | 16 |
+|----|----|---|-----|----|
+| 0 | 16 | 8 | | 8 |
+| 1 | 8 | 6 | | 8 |
+| 2 | 8 | 6 | | 10 |
+| 16 | 8 | 8 | | 8 |
+{{</table>}}
+
+- bias = T[a/,b]/16 - 1/2
+
 ```python
-def linear_attack(tao, t, pi_s_inv):
-    '''TODO'''
+# copied from https://github.com/hkscy/Basic-SPN-cryptanalysis/blob/master/linear_cryptanalysis.py
+# Linear cryptanalysis of the basic SPN cipher based on 'A Tutorial on Linear
+# and Differential Cryptanalysis' by Howard M. Heys.
+#
+# We try to determine linear expressions between the input and output bits
+# which have a linear probability bias. Randomly chosen bits would only
+# satisfy the expression with probability 0.5 (Matsui's Piling up Lemma)
+#
+# 02/12/16 Chris Hicks
+
+import basic_SPN as cipher
+from math import trunc, fabs
+import itertools as it
+import collections
+
+# Return bit n from (nibble) bits of bit-length 4
+def getNibbleBit(bits, n):
+    return int(bin(bits)[2:].zfill(4)[n])
+
+# Return bit n from (short) bits of bit-length 16
+def getShortBit(bits, n):
+    return int(bin(bits)[2:].zfill(16)[n])
+
+# Build table of input values
+sbox_in = ["".join(seq) for seq in it.product("01", repeat=4)]
+# Build a table of output values
+sbox_out = [ bin(cipher.sbox[int(seq,2)])[2:].zfill(4) for seq in sbox_in ]
+# Build an ordered dictionary between input and output values
+sbox_b = collections.OrderedDict(zip(sbox_in,sbox_out))
+# Initialise the Linear Approximation Table (LAT)
+probBias = [[0 for x in range(len(sbox_b))] for y in range(len(sbox_b))]
+
+# A complete enumeration of all the linear approximations of the simple SPN
+# cipher S-Box. Dividing an element value by 16 gives the probability bias
+# for the particular linear combination of input and output bits.
+print('Linear Approximation Table for basic SPN cipher\'s sbox: ')
+print('(x-axis: output equation - 8, y-axis: input equation - 8)')
+for bits in sbox_b.items():
+    input_bits, output_bits = bits
+    X1,X2,X3,X4 = [ int(bits,2) for bits in [input_bits[0],input_bits[1],input_bits[2],input_bits[3]] ]
+    Y1,Y2,Y3,Y4 = [ int(bits,2) for bits in [output_bits[0],output_bits[1],output_bits[2],output_bits[3]] ]
+
+    equations_in = [0, X4, X3, X3^X4, X2, X2^X4, X2^X3, X2^X3^X4, X1, X1^X4,
+                    X1^X3, X1^X3^X4, X1^X2, X1^X2^X4, X1^X2^X3, X1^X2^X3^X4]
+
+    equations_out = [0, Y4, Y3, Y3^Y4, Y2, Y2^Y4, Y2^Y3, Y2^Y3^Y4, Y1, Y1^Y4,
+                    Y1^Y3, Y1^Y3^Y4, Y1^Y2, Y1^Y2^Y4, Y1^Y2^Y3, Y1^Y2^Y3^Y4]
+
+    for x_idx in range (0, len(equations_in)):
+        for y_idx in range (0, len(equations_out)):
+            probBias[x_idx][y_idx] += (equations_in[x_idx]==equations_out[y_idx])
+
+# Print the linear approximation table
+for bias in probBias:
+    for bia in bias:
+        #trunc(((bia/16.0)-0.5)*16.0)
+        print('{:d}'.format(bia-8).zfill(2), end=' ')
+    print('')
+
+# Constructing Linear Approximations for the Complete Cipher.
+# It is possible to attack the cipher by recovering a subset of the subkey
+# bits that follow the last round.
+
+# Using the LAT, we can construct the following equation that holds with
+# probability 0.75. Let U_{i} and V_{i} represent the 16-bit block of bits
+# at the input and output of the round i S-Boxes, respectively, and let
+# K_{i,j} represent the j\'th bit of the subkey block of bits exclusive-ORed
+# at the input to round i. Also let P_{i} represent the i\'th input bit, then
+#
+# U_{4,6}⊕U_{4,8}⊕U_{4,14}⊕U_{4,16}⊕P_{5}⊕P_{7}⊕P_{8}⊕SUM(K) = 0 where
+#
+# SUM(K) = K_{1,5}⊕K_{1,7}⊕K_{1,8}⊕K_{2,6}⊕K_{3,6}⊕K_{3,14}⊕K_{4,6}⊕K_{4,8}⊕K_{4,14}⊕K_{4,16}
+#
+# holds with a probability of 15/32 (with a bias of 1/32).
+#
+# Since sum(K) is fixed (by the key, k), U_{4,6}⊕U_{4,8}⊕U_{4,14}⊕U_{4,16}⊕P_{5}⊕P_{7}⊕P_{8} = 0
+# must hold with a probability of either 15/32 or 1-15/32. In other words we
+# now have a linear approximation of the first three rounds of the cipher with
+# a bias of magnitude 1/32.
+
+k = cipher.keyGeneration()
+k_5 = int(k,16)&0xffff #Just last 16 bits are K5
+k_5_5_8 = (k_5>>8)&0b1111
+k_5_13_16 = k_5&0b1111
+
+print('\nTest key k = {:}'.format(k), end = ' ')
+print( '(k_5 = {:}).'.format(hex(k_5).zfill(4)))
+print('Target partial subkey K_5,5...k_5,8 = 0b{:} = 0x{:}'.format(bin(k_5_5_8)[2:].zfill(4), hex(k_5_5_8)[2:].zfill(1) ))
+print('Target partial subkey K_5,13...k_5,16 = 0b{:} = 0x{:}'.format(bin(k_5_13_16)[2:].zfill(4), hex(k_5_13_16)[2:].zfill(1) ))
+print('Testing each target subley value...')
+
+countTargetBias = [0]*256
+
+for pt in range(10000):
+    ct = cipher.encrypt(pt, k)
+    ct_5_8 = (ct>>8)&0b1111
+    ct_13_16 = ct&0b1111
+
+    # For each target partial subkey value k_5|k_8|k_13|k_16 in [0,255],
+    # increment the count whenever equation (5) holds true,
+
+    for target in range(256):
+        target_5_8 = (target>>4)&0b1111
+        target_13_16 = target&0b1111
+        v_5_8 = (ct_5_8^target_5_8)
+        v_13_16 = (ct_13_16^target_13_16)
+
+        #for target_13_16 in range(16):
+        # Does U_{4,6}⊕U_{4,8}⊕U_{4,14}⊕U_{4,16}⊕P_{5}⊕P_{7}⊕P_{8}⊕SUM(K) = 0?
+
+	    # (1) Compute U_{4,6}⊕U_{4,8}⊕U_{4,14}⊕U_{4,16} by running the ciphertext
+	    # backwards through the target partial subkey and S-Boxes.
+	    # xor ciphertext with subKey bits
+
+	    # (2) Run backwards through s-boxes
+        u_5_8, u_13_16 = cipher.sbox_inv[v_5_8], cipher.sbox_inv[v_13_16]
+
+        #print(((pt>>11)&0b1)^((pt>>9)&0b1)^((pt>>8)&0b1))
+	    # (3) Compute linear approximation U_{4,6}⊕U_{4,8}⊕U_{4,14}⊕U_{4,16}⊕P_{5}⊕P_{7}⊕P_{8}
+        lApprox = ((u_5_8>>2)&0b1)^(u_5_8&0b1)^((u_13_16>>2)&0b1)^(u_13_16&0b1)^((pt>>11)&0b1)^((pt>>9)&0b1)^((pt>>8)&0b1)
+        if lApprox == 0:
+            countTargetBias[target] += 1
+
+# The count which deviates the largest from half of the number of
+# plaintext/ciphertext samples is assumed to be the correct value.
+bias = [fabs(lAprx - 5000.0)/10000.0 for lAprx in countTargetBias]
+
+maxResult, maxIdx = 0,0
+for rIdx, result in enumerate(bias):
+    if result > maxResult:
+        maxResult = result
+        maxIdx = rIdx
+
+print('Highest bias is {:} for subKey value {:}.'.format(maxResult, hex(maxIdx)))
+if (maxIdx>>4)&0b1111 == k_5_5_8 and maxIdx&0b1111 == k_5_13_16:
+	print('Success!')
+else:
+	print('Failure')
+
+```
+
+**Result**
+
+```text
+Linear Approximation Table for basic SPN cipher's sbox:
+(x-axis: output equation - 8, y-axis: input equation - 8)
+08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 -2 -2 00 00 -2 06 02 02 00 00 02 02 00 00
+00 00 -2 -2 00 00 -2 -2 00 00 02 02 00 00 -6 02
+00 00 00 00 00 00 00 00 02 -6 -2 -2 02 02 -2 -2
+00 02 00 -2 -2 -4 -2 00 00 -2 00 02 02 -4 02 00
+00 -2 -2 00 -2 00 04 02 -2 00 -4 02 00 -2 -2 00
+00 02 -2 04 02 00 00 02 00 -2 02 04 -2 00 00 -2
+00 -2 00 02 02 -4 02 00 -2 00 02 00 04 02 00 02
+00 00 00 00 00 00 00 00 -2 02 02 -2 02 -2 -2 -6
+00 00 -2 -2 00 00 -2 -2 -4 00 -2 02 00 04 02 -2
+00 04 -2 02 -4 00 02 -2 02 02 00 00 02 02 00 00
+00 04 00 -4 04 00 04 00 00 00 00 00 00 00 00 00
+00 -2 04 -2 -2 00 02 00 02 00 02 04 00 02 00 -2
+00 02 02 00 -2 04 00 02 -4 -2 02 00 02 00 00 02
+00 02 02 00 -2 -4 00 02 -2 00 00 -2 -4 02 -2 00
+00 -2 -4 -2 -2 00 02 00 00 -2 04 -2 -2 00 02 00
+
+Test key k = c6992544c8ab1039e219 (k_5 = 0xe219).
+Target partial subkey K_5,5...k_5,8 = 0b0010 = 0x2
+Target partial subkey K_5,13...k_5,16 = 0b1001 = 0x9
+Testing each target subley value...
+Highest bias is 0.0276 for subKey value 0x29.
+Success!
 ```
 
 #### Differential Crypt Analysis
 
-```todo
-REVISIT
-```
+- chosen-plaintext attack
+- leverages derivatives to optimize
+- p, p\*, maintain a fixed difference -> c, c\*
+- stronger assumptions:
+  - can choose the plaintext
+- choose and input xor x'
+  - \$(x,x^{\*},y,y^{\*})\$
+  - \$x,x^{\*} = x'\$
+  - for each y and y\* attacker guesses key value of last round
+  - decrypts, and checks xor at last but one round
+  - probably outcome
+  - maintains freq table
+  - candidate key will have highest number of matches
+- \$(x,x^{\*})\$
+- \$(y,y^{\*})\$ \$ = S(x) \wedge S(x^{\*})\$
+- \$ \Delta{x'}\$ set of ordered pairs (x, x\*).
+- keys not required
+- immunity
+  - build the sbox with as much uniform distribution as possible
+  - uniform mapping
+
+**Delta Set**
+{{< equation  >}}
+\Delta(X') = \{(x.x \oplus x') : x \in \{0,1\}^m\}
+{{< /equation >}}
+
+- 2^m values
+- values xor can take 2^n
+- 2^m output pairs are distributed amound 2^n values
+- non-linear s box, distribution is not s box
+- impossible to obtain fully uniform distribution when non-linear formula is
+  applided
+- take the max tally
+-
 
 ### Data Encryption Standard (DES)
 
@@ -1246,7 +1470,7 @@ return (b7b6b5b4b3b2b1b0)
 
 {{<table "table text-white table-bordered">}}
 | | | | |
-| ------ | ----------- | ------ | ----------- |
+|-------------|-------------|-------------|-------------|
 | \$s*{0,0}\$ | \$s*{0,1}\$ | \$s*{0,2}\$ | \$s*{0,3}\$ |
 | \$s*{1,0}\$ | \$s*{1,1}\$ | \$s*{1,2}\$ | \$s*{1,3}\$ |
 | \$s*{2,0}\$ | \$s*{2,1}\$ | \$s*{2,2}\$ | \$s*{2,3}\$ |
@@ -1325,6 +1549,36 @@ review
     - GCM
       - GCM is another mode used for authenticated encryption.
 
+**OFB Encryption\***
+
+```mermaid
+graph LR
+  IV[IV = y0]
+  IV --> Plus(+)
+  x1 --> Plus
+  Plus --> ek
+  ek --> y1
+  y1 --> Plus2(+)
+  x2 --> Plus2
+  Plus2 --> ek2
+  ek2 --> y2
+```
+
+**CFB Encryption**
+
+```mermaid
+graph LR
+  IV[IV = y0]
+  IV --> ek
+  ek --> Plus(+)
+  x1 --> Plus
+  Plus --> y1
+  y1 --> ek2[ek]
+  ek2 --> Plus2(+)
+  x2 --> Plus2
+  Plus2 --> y2
+```
+
 #### Padding Oracle Attack on CBC Mode
 
 - It exploits the requirement for plaintext data to be “padded” so that its
@@ -1359,17 +1613,36 @@ review
   {{< equation  >}}
   f(z_1, z_2, z_3) = (z_1 \bigwedge z_2) \newcommand*\xor{\oplus} (z_1
   \bigwedge z_3) \newcommand*\xor{\oplus} (z_3 \bigwedge z_3)
-  {{ </equation> }}
+  {{< /equation >}}
 - using majority function P[z=zj] = 3/4
 - reduce combinations
 - check patterns
 
 #### Algebric Attack on Filter Generator
-asdf
+
+- can be done with sufficient ks
+- solve as a polynomial equation
+- determine enough equations to allow us to use an approach known as linearization
+- Grobner basis algorithm
+- more ks values, more likely computation will be feasible
 
 #### Trivium
 
-asdf
+- popular new stream cipher
+- it is one of the recommended ciphers resulting from the eSTREAM project.
+- 3 registers sizes 93, 84, and 111 (comprising 288 bits in total).
+- keystream bits are computed from registers
+- 80 bit key loaded into high-order of the A register
+- remaining bits are set to 0
+- initialization vector is stored in B
+- remaining bits are set to 0
+- finally C is set to 1
+- 1152 are generated and discarded
+- all input bits are used as keystream bits
+
 ### Notes and References
 
-adsf
+- The Block Cipher Companion by Lars Knudsen and Matthew Robshaw
+- Stream Ciphers by Andreas Klein
+
+## Hash Functions and Message Authentication
