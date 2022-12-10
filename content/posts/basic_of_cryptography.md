@@ -15,71 +15,6 @@ understand "how do I use this".
 
 <!-- more -->
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
-
-- [Introduction To Cryptography](#introduction-to-cryptography)
-    - [Basic Crypto Systems](#basic-crypto-systems)
-        - [Hybrid Cryptography](#hybrid-cryptography)
-    - [Message Integrity](#message-integrity)
-        - [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
-        - [Signature Schemes](#signature-schemes)
-        - [Nonrepudiation](#nonrepudiation)
-        - [Certificates](#certificates)
-        - [Hashing](#hashing)
-    - [Cryptographic Protocols](#cryptographic-protocols)
-    - [Security](#security)
-    - [Notes and References](#notes-and-references)
-- [Classical Cryptography](#classical-cryptography)
-    - [Introduction](#introduction)
-        - [Shift Cipher](#shift-cipher)
-        - [Substitution Cipher](#substitution-cipher)
-        - [Affine Cipher](#affine-cipher)
-        - [Vigenere Cipher](#vigenere-cipher)
-        - [Hill Cipher](#hill-cipher)
-        - [Permutations Cipher](#permutations-cipher)
-        - [Stream Cipher](#stream-cipher)
-        - [Autokey Cipher](#autokey-cipher)
-    - [Cryptanalysis](#cryptanalysis)
-        - [Affine Cipher](#affine-cipher-1)
-        - [Substitution Cipher](#substitution-cipher-1)
-        - [Vigenere Cipher](#vigenere-cipher-1)
-        - [Hill Cipher](#hill-cipher-1)
-        - [LFSR Stream Cipher](#lfsr-stream-cipher)
-    - [Notes and References](#notes-and-references-1)
-    - [Exercises](#exercises)
-- [Shannon’s Theory, Perfect Secrecy, and the One-Time Pad](#shannons-theory-perfect-secrecy-and-the-one-time-pad)
-    - [Introduction](#introduction-1)
-    - [Elementary Probability Theory](#elementary-probability-theory)
-    - [Perfect Secrecy](#perfect-secrecy)
-    - [One Time Pad](#one-time-pad)
-    - [Entropy](#entropy)
-        - [Properties of Entropy](#properties-of-entropy)
-    - [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
-    - [Notes and References](#notes-and-references-2)
-    - [Exercises](#exercises-1)
-- [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
-    - [Introduction](#introduction-2)
-        - [Substitution-Permutation Networks](#substitution-permutation-networks)
-    - [Cryptanalysis](#cryptanalysis-1)
-        - [Linear Approximation of S Boxes](#linear-approximation-of-s-boxes)
-        - [Linear Attack on SPN](#linear-attack-on-spn)
-        - [Differential Crypt Analysis](#differential-crypt-analysis)
-    - [Data Encryption Standard (DES)](#data-encryption-standard-des)
-        - [Description of DES](#description-of-des)
-    - [Advanced Encryption Standard](#advanced-encryption-standard)
-        - [Description of AES](#description-of-aes)
-    - [Modes of Operation](#modes-of-operation)
-        - [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
-    - [Stream Ciphers](#stream-ciphers)
-        - [Correlation Atack on Combination Generator](#correlation-atack-on-combination-generator)
-        - [Algebric Attack on Filter Generator](#algebric-attack-on-filter-generator)
-        - [Trivium](#trivium)
-    - [Notes and References](#notes-and-references-3)
-- [Hash Functions and Message Authentication](#hash-functions-and-message-authentication)
-
-<!-- markdown-toc end -->
-
 ## Introduction To Cryptography
 
 ### Basic Crypto Systems
@@ -1646,3 +1581,571 @@ graph LR
 - Stream Ciphers by Andreas Klein
 
 ## Hash Functions and Message Authentication
+
+### Hash Functions and Data Integrity
+
+- bit flipping attack: can modify it in a predicatable way
+- data integrity:
+  - cryptographic hash: provide assurange of settings
+- _h_ be a hash function and _x_ be some data
+  - y = h(x)
+  - message digest
+  - assume y is in a secure place. x is not.
+  - hash family
+  - keyed hash functions
+    - often used as a _message authentication code_ or MAC
+  - for a message x, corresponding **authenitcation tag**
+  - distinction between the assurance of data integrity provided by an unkeyed,
+    as opposed to a keyed, hash function.
+  - if Alice and Bob use \$K\$ to specify hash function they can transmit data
+    and tag over to unsecure channel.
+
+```definition
+A hash family is a four tuple $(X,Y,K,H)$ where the following conditions are satisfied:
+
+<br>
+1. $X$ is a set of possible messsages
+<br>
+2. $Y$ is a set of finite message digests or authentication tags
+<br>
+3. $K$ is the key space
+<br>
+4. for $k \in K$ there is a hash function $h_k \in H$. Each $h_k : X \to Y$
+```
+
+If X > Y it is a compression function. A pair \$(x,y) \in X \times Y\$ valid
+pair if \$h(x) = y\$. H could be keyed or unkeyed hash function.
+
+- (N,M) - hash family
+
+### Security of a Hash Function
+
+- Requirement of h(x)
+- 3 problems:
+  - preimage: can find an x for h(x) that equals y
+  - second preimage: h(x') = h(x)
+  - collision : h(x') = h(x).
+
+#### Random Oracle Model
+
+- choose a random hash function
+- only oracle access
+- query the oracle
+- well defined hash function should behave like a random oracle
+
+Preimage Search
+
+```definition
+choose any $X_0 \subseteq X,|X_0|=Q$ for each $x \in X_0$
+<br>
+if h(x) = y
+<br>
+&emsp;then return (x)
+<br>
+return (failure)
+```
+
+#### Algorithms in the Random Oracle Model
+
+- Las Vegas Algorithm
+- \$0 \leq \epsilon \le 1\$
+- worst case success probability ε if, for every problem instance, the algorithm
+  returns a correct answer with probability at least ε
+- random algorithm: average-case success probability ε
+- \$(\epsilon, Q)-algorithm\$
+
+Second Preimage Search
+
+```definition
+y ← h(x)
+<br>
+choose $X_0 \subseteq X\\\{x\}, |X_0| = Q-1$
+<br>
+foreach $x_0 \in X_0$
+<br>
+if $h(x_0) = y$
+<br>
+&emsp; then return $x_0$
+<br>
+return (failure)
+
+```
+
+- birthday paradox says that in a group of 23 randomly chosen people, at least
+  two will share a birthday with probability at least 1/2.
+
+Collision Finder
+
+```definition
+choose $X_0 \subseteq X,|X_0|=Q$ for each
+<br>
+$x \in X_0$
+<br>
+do $y_x ← h(x)$
+if $y_x =y_{x′}$ for some $x′ \neq x$
+<br>
+then return (x, x′) <br>
+else return (failure)
+```
+
+- This algorithm is analogous to throwing Q balls randomly into M bins and then
+  checking to see if some bin contains at least two balls.
+- Probability of at least one collision is 1 - P[e2 or e2].
+- Probability of finding no collisions is:
+  {{< equation  >}}
+  \Pi_i^{Q - 1}(1-\frac{1}{M})
+  {{< /equation >}}
+
+Collision to second pre-image
+
+```definition
+external ORACLE-2ND-PREIMAGE,h
+<br>
+comment: we consider the hash function h to be fixed
+<br>
+choose $x \in X$ uniformly at random
+<br>
+if ORACLE-2ND-PREIMAGE(x) = x′ <br>
+&emsp;then return (x, x′) <br>
+&emsp;else return (failure)
+```
+
+- Solving collision is easier than solving pre-image or second pre-image
+- Using reduction, we can provide it.
+
+Collision to pre-image
+
+```definition
+external ORACLE-PREIMAGE,h
+<br>
+comment: we consider the hash function h to be fixed
+<br>
+choose $x \in X$ uniformly at random
+<br>
+$y \leftarrow  h(x)$ <br>
+if ORACLE-PREIMAGE(y) = x′ and $(x \neq x')$ <br>
+&emsp;then return (x, x′) <br>
+&emsp;else return (failure)
+```
+
+- Can a collision be reduced to a preimage?
+- Collision resistance implies preimage resistance.
+  - yes, in special situations
+- arbitrary algorithm that solves Preimage with probability equal to 1 can be
+  used to solve Collision.
+- if any collision is found for a given hash function, then that hash function
+  is considered to have been completely “broken.”
+
+#### Iterated Hash Function
+
+- A hash function h constructed by this method is called an iterated hash function.
+- Hash function
+
+  {{< equation  >}}
+  h : \bigcup\_{i=m+t+1}^{\inf} \{0,1\}^i \to \{0,1\}^l
+  {{< /equation >}}
+
+- three steps:
+
+  - preprocessing step
+    - construct string y from x such that \$|y| \equiv 0 (\mod t)\$
+  - processing step
+    {{< equation  >}}
+    z*0 \leftarrow IV
+    {{< /equation >}}
+    {{< equation  >}}
+    z_r \leftarrow compress( z*{r-1} || y_r)
+    {{< /equation >}}
+  - output transformation
+  - \$h(X) \to g(z_r)\$
+  - \$y = x ∥ pad(x)\$
+  - pad is a padding function
+
+#### The Merkle-Damgard Construction
+
+- h takes any finite bitstring of length m+t+1 and creates message digest of
+  length m.
+- method of building collision-resistant cryptographic hash functions from collision-resistant one-way compression functions.
+- wide pipe construction
+- fast wide pipe construction
+- proven by Merkle and Damgård, that if the one-way compression function f is
+  collision resistant, then so is the hash function constructed using it
+- Second preimage attacks against long messages are always much more efficient than brute force.
+- Multicollisions (many messages with the same hash) can be found with only a little more work than collisions.
+- "Herding attacks", which combines the cascaded construction for multicollision finding (similar to the above) with collisions found for a given prefix (chosen-prefix collisions). This allows for constructing highly specific colliding documents, and it can be done for more work than finding a collision, but much less than would be expected to do this for a random oracle
+- Length extension: Given the hash {\displaystyle H(X)}H(X) of an unknown input X, it is easy to find the value of {\displaystyle H({\mathsf {Pad}}(X)\|Y)}{\displaystyle H({\mathsf {Pad}}(X)\|Y)}, where pad is the padding function of the hash. That is, it is possible to find hashes of inputs related to X even though X remains unknown.[9] Length extension attacks were actually used to attack a number of commercial web message authentication schemes such as one used by Flickr.
+
+```definition
+external compress <br>
+comment: compress : ${0, 1}^{m+t}→ {0, 1}^{m}$, where t ≥ 2
+$n \leftarrow |x|$ <br>
+$k ← ⌈n/(t − 1)⌉$ <br>
+$d ← k(t−1)−n for i ← 1 to k − 1$ <br>
+do $yi ← xi$<br>
+$yk \leftarrow x_k ||0^{d}||$<br>
+$y_{k+1}$ ← the binary representation of d <br>
+$z_{1} \leftarrow 0^{m+1} ∥y_{1}1$<br>
+$g_{1} \leftarrow compress(z_{1})$<br>
+for $i ← 1$ to k<br>
+do <br>
+$z_i+1 ←g_i ||y|| y_{i+1}$<br>
+$g_{i+1} ← compress(z_{i+1})$<br>
+$h(x) ← g_{k+1}$ <br>
+return $(h(x))$<br>
+```
+
+```mermaid
+graph TD
+  M1
+  IV --> f1
+  M1 --> f1
+  f1 --> f2
+  M2 --> f2
+  Mt --> ft
+  ftl[ft-1] --> ft
+  Mtl[Mt-1] --> ftl
+  ft --> hM[hM]
+  f2 --> ftl
+```
+
+```mermaid
+graph TD
+  MessageM[Message M]
+  subgraph MD construction
+    1[Divide M into t Blocks]
+    2[Append Padding Bits]
+    3[Append Length Block]
+    subgraph f
+      4[E] -->|Hi and Hi-1| 4
+    end
+    1 --> 2
+    2 --> 3
+    3 -->|Mi| 4
+  end
+  4-->5[hM = Ht]
+  MessageM --> 1
+```
+
+md5 psuedocode
+check https://fthb321.github.io/MD5-Hash/MD5OurVersion2.html to play with it
+
+```java
+// : All variables are unsigned 32 bit and wrap modulo 2^32 when calculating
+var int s[64], K[64]
+var int i
+
+// 64 operations
+// s specifies the per-round shift amounts
+s[ 0..15] := { 7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22 }
+s[16..31] := { 5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20 }
+s[32..47] := { 4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23 }
+s[48..63] := { 6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21 }
+
+// Use binary integer part of the sines of integers (Radians) as constants:
+for i from 0 to 63 do
+    K[i] := floor(232 × abs (sin(i + 1)))
+end for
+// (Or just use the following precomputed table):
+K[ 0.. 3] := { 0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee }
+K[ 4.. 7] := { 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501 }
+K[ 8..11] := { 0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be }
+K[12..15] := { 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821 }
+K[16..19] := { 0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa }
+K[20..23] := { 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8 }
+K[24..27] := { 0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed }
+K[28..31] := { 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a }
+K[32..35] := { 0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c }
+K[36..39] := { 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70 }
+K[40..43] := { 0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05 }
+K[44..47] := { 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665 }
+K[48..51] := { 0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039 }
+K[52..55] := { 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1 }
+K[56..59] := { 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1 }
+K[60..63] := { 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391 }
+
+// Initialize variables:
+// AKA IV
+var int a0 := 0x67452301   // A
+var int b0 := 0xefcdab89   // B
+var int c0 := 0x98badcfe   // C
+var int d0 := 0x10325476   // D
+
+// Pre-processing: adding a single 1 bit
+append "1" bit to message
+ // Notice: the input bytes are considered as bits strings,
+ //  where the first bit is the most significant bit of the byte.[51]
+
+// Pre-processing: padding with zeros
+append "0" bit until message length in bits ≡ 448 (mod 512)
+
+// Notice: the two padding steps above are implemented in a simpler way
+//  in implementations that only work with complete bytes: append 0x80
+//  and pad with 0x00 bytes so that the message length in bytes ≡ 56 (mod 64).
+
+append original length in bits mod 264 to message
+
+// Process the message in successive 512-bit chunks:
+for each 512-bit chunk of padded message do
+    break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15
+    // Initialize hash value for this chunk:
+    var int A := a0
+    var int B := b0
+    var int C := c0
+    var int D := d0
+    // Main loop:
+    for i from 0 to 63 do
+        var int F, g
+        if 0 ≤ i ≤ 15 then
+            F := (B and C) or ((not B) and D)
+            g := i
+        else if 16 ≤ i ≤ 31 then
+            F := (D and B) or ((not D) and C)
+            g := (5×i + 1) mod 16
+        else if 32 ≤ i ≤ 47 then
+            F := B xor C xor D
+            g := (3×i + 5) mod 16
+        else if 48 ≤ i ≤ 63 then
+            F := C xor (B or (not D))
+            g := (7×i) mod 16
+        // Be wary of the below definitions of a,b,c,d
+        F := F + A + K[i] + M[g]  // M[g] must be a 32-bits block
+        A := D
+        D := C
+        C := B
+        B := B + leftrotate(F, s[i])
+    end for
+    // Add this chunk's hash to result so far:
+    a0 := a0 + A
+    b0 := b0 + B
+    c0 := c0 + C
+    d0 := d0 + D
+end for
+
+var char digest[16] := a0 append b0 append c0 append d0 // (Output is in little-endian)
+```
+
+#### Examples of Iterated Hash Functions
+
+- MD4 in 1990
+- MD5 in 1992
+- SHA 1993
+- SHA-1 1995
+- 2004: Collision found
+- 2004: MD5 Collision Found
+- 2017: Collision for SHA-1
+- SHA-2 Includes 4 hash functions
+  - 224, 256, 384, and 512
+- SHA-3
+  - sponge construction
+  - FIPS standards in 2015
+
+```mermaid
+graph TD
+  1[Arbitrary Length Input]
+  2[Iterative Compression Function]
+
+  1 --> 2
+  2 --> 2
+  2 --> 3[Fixed Length Output]
+  3 --> 4[Output Transformation]
+  4 --> 5[Output]
+```
+
+### Sponge Construction
+
+- SHA-3 design.
+- Every bitstring is a unique preimage
+
+#### SHA-3
+
+- Four hash functions:
+  - 224, 256, 384, and 512
+  - derived from Keccac
+  - 24 rounds
+    - 5 sub rounds
+    - SHAKE128 and SHAKE256
+      - Extendable Output Functions
+
+{{<table "table text-white table-bordered">}}
+| hash function | b | c | r | collision security | preimage security |
+|---------------|------|------|------|--------------------|-------------------|
+| 224 | 1600 | 1152 | 448 | 112 | 224 |
+| 256 | 1600 | 1088 | 512 | 128 | 256 |
+| 384 | 1600 | 832 | 768 | 192 | 384 |
+| 512 | 1600 | 576 | 1024 | 256 | 512 |
+| SHAKE128 | 1600 | 1344 | 256 | min(d/s, 128) | min(d,128) |
+| SHAKE256 | 1600 | 1088 | 512 | min(d/2, 256) | min(d,256) |
+{{</table>}}
+
+### Message Authentication Codes
+
+- key hash functions that satisfy certain properties
+- length extension attack
+  - easy to hk in the case hk(x) and x' are known.
+- known message attack
+- chosen message tattack
+- (x1, y1,...(xq, yq))
+- key guessing attack
+- tag guessing attack
+- y,z,l,h is secure as MAC given a fixed unknown key
+- x,y,k,g is colision resistent
+
+TODO Revisit
+
+#### Nested MAC and HMAC
+
+- nested MAC is composition of two hash families
+
+1. apply function that takes a message x as input and produces y as output
+2. take y and produce message digest z
+3. taken from two different hash families
+4.
+
+#### CBC-MAC
+
+- Block cipher with fixed public initialization vector
+  {{<equation>}}
+  \$y\_ = e(y{i-1} \oplus x_i)\$
+  {{< /equation >}}
+- We encrypt the pt in CBC and only retain last cipher block, which is atag
+- Tag attack: request tags on a large number of messages
+- Dup is found, adversary can request on additional message and request it's tag
+- Can then produce a new message and corresponding tag
+- if certain plausible but unproved assumptions about the randomness of an
+  encryption scheme are true, then CBC-MAC will be secure.
+
+#### Authentication Encryption
+
+- MAC provides data integrity
+- Encryption secrecy
+- MAC and encrypt
+  - compute z on non-cipher
+  - (y,z) where y is ciphertet and z is hash is transmitted
+- MAC then encrypt
+  - hk computed
+  - encrypt
+  - transmit y
+- encrypt then MAC
+  - encrypt
+  - mac
+  - decrypt
+- Most common is encrypt then MAC
+- more secure than the others
+- more efficient
+- CCM mode of operation MAc then encrypt approach
+
+Galois/Counter mode
+
+```mermaid
+graph TD
+  0Counter[Counter 0] --> 0inc[incr] --> 1Counter[Counter 1] --> 1inc[incr] -->
+  2Counter[Counter 2]
+  0Counter --> eK1
+  1Counter --> eK2
+  2Counter --> eK3
+  eK2 --> y2
+  x2 --> y2
+  AuthData1[Auth Data 1]
+  AuthData1 --> MultH1[Mult H]
+  MultH1 --> y2
+  y2 --> MultH2[Mult H]
+  MultH2 --> y3
+  eK3 --> y3
+  x3 --> y3
+  y3 --> MultH3[Mult H]
+  MultH3 --> LenALenC
+  LenALenC --> MultH4[Mult H]
+  MultH4 --> xorLast
+  2Counter --> eK3
+  eK1 --> xorLast
+  xorLast --> AuthTag
+```
+
+### Unconditionally Secure MACs
+
+- infinite computing power in this case
+- Deception probability \$Pd_q\$ is the probability \$\epsilon\$ that adversary
+  can create forgery after observing Q valid message pairs.
+- Q=0 is an impersonation
+- Q=1 is termed substitution
+- maximimize payoff
+
+#### Strongly Universal Hash Families
+
+- A strongly universal family is one that meets the following conditions:
+- for every \$ x, x \prime \in X \$ such that \$ x \neq x'\$ and for \ y,y' \in Y\$:
+
+{{< equation >}}
+|{K \in K : h_k(x) = y,k_k(x') = y'}| = \frac{K}{M^2}
+{{< /equation  >}}
+
+- The number of hash functions in the family H that map to x -> y is and x' ->
+  y' is indpendent of the choice of y and y'
+- There are |K| functions total
+- M2 possible choices
+- Yield authentication coes which Pd0 and Pd1 can be computed.
+
+#### Optimality of Deception Probabilities
+
+{{< equation >}}
+\sum payoff(x,y) = \sum \frac{|k \in K: h_k(x) = y|}{|K|} = 1
+{{< /equation >}}
+
+- For every x in X, there is an Authentication tag y such that:
+
+{{< equation >}}
+payoff(x,y) \geq \frac{1}{M}
+{{< /equation >}}
+
+- \$Pd_0a = \frac{1}{M}\$ whenever \$Pd_1 = \frac{1}{M}\$
+
+#### Notes and References
+
+See book for more references.
+
+## RSA Cryptosystem and Factoring Integers
+
+### Introduction to Public-key Cryptography
+
+- Send a message to bob using public encryption rule \$e_k\$. Bob will be the
+  only person that can decrypt the ciphertext using the private key.
+- Story time:
+  - Alice places object in a metal box
+  - Locks it with a combination left by bob
+  - Bob is the only one who can open it b/c he knows the combo
+- Slower than AES
+- Never used to encrypt long messages
+- Mainly used to encrypt short keys which are then used for messaging
+- Alice chooses key L and computed y e_l(x)
+- Encrypts L using Bob's public key
+- z = e_k_bob(L)
+- y ciphertext and encrypted key z trasmitted to bob
+- decrypts y using private key to get L
+- using L, obtains plaintext x
+- can never provide unconditional security
+- opponent can always encrypt until he finds x such that y = ek(x)
+- no proved one way functions
+
+### More number theory
+
+- Euclidean Algorithm
+- Number theory
+
+#### Euclidean Algorithm
+
+-is an efficient method for computing the greatest common divisor (GCD) of two
+integers (numbers)
+
+```python
+r0 ← a
+r1 ← b m←1
+while rm ̸= 0
+ q m ← ⌊ r m − 1 ⌋ rm
+do rm+1←rm−1−qmrm m ← m + 1
+m←m−1
+return (q1, . . . , qm; rm) comment: rm = gcd(a, b)
+```
+
+#### Chinese Remainder Theorem
+
+### RSA Cryptosystem
