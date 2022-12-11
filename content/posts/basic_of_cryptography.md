@@ -2133,8 +2133,19 @@ See book for more references.
 
 #### Euclidean Algorithm
 
--is an efficient method for computing the greatest common divisor (GCD) of two
-integers (numbers)
+- is an efficient method for computing the greatest common divisor (GCD) of two
+  integers (numbers)
+- The Euclidean algorithm is based on the principle that the greatest common
+  divisor of two numbers does not change if the larger number is replaced by its
+  difference with the smaller number.
+- extended Euclidean algorithm, the GCD can be expressed as a linear combination of the two original numbers,
+- Bezots identity
+- the algorithm never requires more steps than five times the number of digits
+  (base 10) of the smaller integer.
+- It is used for reducing fractions to their simplest form and for performing
+  division in modular arithmetic.
+- may be used to solve Diophantine equations, such as finding numbers that satisfy multiple congruences according to the Chinese remainder theorem, to construct continued fractions, and to find accurate rational approximations to real numbers
+-
 
 ```python
 r0 ← a
@@ -2148,4 +2159,93 @@ return (q1, . . . , qm; rm) comment: rm = gcd(a, b)
 
 #### Chinese Remainder Theorem
 
+- used to solve congruent equations.
+- The Chinese remainder theorem asserts that this system has a unique solution
+  modulo M = m1 ×m2 ×···×mr
+- Proving the Chinese remainder theorem amounts to proving that the function χ
+  is a bijection
+- only different variable
+- different moduli
+- \$X \equiv \alpha_1 (mod m1)\$
+- \$X \equiv \alpha_2 (mod m2)\$
+- unique prime solution
+- \$X = (\alpha M_n + M_n^-1) mod M \$
+
+#### Other useful math
+
+- Lagrange’s theorem: The order of G is the number of elements in G. The order of an element g ∈ G is defined to be the smallest positive integer m such that gm = 1.
+
 ### RSA Cryptosystem
+
+{{< equation >}}
+ab \equiv 1 (mod \phi(n)),
+{{< /equation >}}
+
+{{< equation >}}
+ab = t \phi(n) + 1
+{{< /equation >}}
+
+```definition
+Let n = pq, where p and q are primes. Let P = C = Zn, and define
+<br>
+<div class="equation">
+$K = {(n, p, q, a, b) : ab ≡ 1 (mod φ(n))}$.
+</div>
+For $K = (n, p, q, a, b)$, define
+and <br>
+
+
+
+<div class="equation">
+$e_k(x) = x^b \mod n$ and  $d_K(y) = y^a \mod n$
+</div>
+
+<div class="equation">
+$(x, y \in Zn)$
+</div>
+The values n and b comprise the public key, and the values p, q,
+and a form the private key.
+
+```
+
+1. Bob chooses p=101 q=113 n = 11413
+2. \$\phi(n) = 100 \times 112 = 11200 = 2^65^27\$. \$b\$ can only be used as an
+   encryption exponent if and only if b is not divisible by 2, 5, or 7.
+   \$\textbf(gcd)(\phi(n), b) = 1\$ using Multiplicative inverse algo. Computes
+   \$b^{-1}\$ simultaneously. Bob chooses 3533 then \$b^{-1} \mod 11200 = 6597\$.
+   Decryption exponent a = 6597.
+3. Bob publishes n = 11413 and b=3533.
+4. Plaintext x = 9726 to send to bob.
+5. \$9726^3533 mod 11513 = 5761\$ and send ciphertext \$y\$ = 5761
+6. \$5761^6597 mod 11413 = 9726\$ and it is decrypted
+
+#### Implementing RSA
+
+1. Generate two large primes, p and q such that \$p \neq q\$
+2. \$n \leftarrow pq\$ and \$\phi(n) \leftarrow (p-1)(q-1)\$
+3. Choose random \$b(1<b<\phi(n))\$ such that \$\text{gcd}(b, \phi(n)) = 1\$
+4. \$a \leftarrow b^{-1} \mod \phi(n)\$
+5. Public key is \$(n, b)\$ and private keys are \$(p,q,a)\$
+
+- Attack A: factor \$n\$. If done, compute \$\phi(n) = (p-1)(q-1)\$ then compute
+  the decryption exponent a from b as Bob.
+- To be secure: \$n = pq\$ must be large enough that it's computationally infeasible.
+- up to 768 bits are computable currently.
+- to be save, one should choose p and q up to 1024 bit primes wuch that n = 2048
+  bit modulus.
+- square and multiply algo: reduces the number of modular multiplications
+  required to compute xc mod n to at most 2l, where l is the number of bits in
+  the binary representation of c.
+
+```definition
+$z \leftarrow 1$ <br>
+for $i \leftarrow l − 1 downto 0$<br>
+$z \leftarrow z^2 \mod n$ <br> do  <br>
+if $c_i=1$
+then $z \leftarrow(z \times x) \mod n$ <br>
+return $(z)$
+```
+
+{{< equation >}}
+c = \sum\_{i=0}^{l-1}{c_i2^i}
+{{< /equation >}}
