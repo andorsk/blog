@@ -2157,6 +2157,46 @@ m←m−1
 return (q1, . . . , qm; rm) comment: rm = gcd(a, b)
 ```
 
+```python
+#+begin_src python :results output
+def algo(n,mod):
+    a0 = n
+    b0 = mod
+    t0, t = 0, 1
+    s0, s = 1, 0
+    r = a0
+    q = 0
+    print(r, q, s0, t0)
+    while r > 0:
+        tmp = t0 - q*t
+        t0 = t
+        t = tmp
+        tmp = s0 - q*s
+        s0 = s
+        s = tmp
+        a0 = b0
+        b0 = r
+        q = a0 // b0
+        r = a0 % b0
+        print(r, q, s0, t0)
+    r = b0
+    print(r,s,t)
+
+M = 75
+N = 28
+algo(N,M)
+
+#+end_src
+
+#+RESULTS:
+: 28 0 1 0
+: 19 2 0 1
+: 9 1 1 0
+: 1 2 -2 1
+: 0 9 3 -1
+: 1 -8 3
+```
+
 #### Chinese Remainder Theorem
 
 - used to solve congruent equations.
@@ -2170,6 +2210,20 @@ return (q1, . . . , qm; rm) comment: rm = gcd(a, b)
 - \$X \equiv \alpha_2 (mod m2)\$
 - unique prime solution
 - \$X = (\alpha M_n + M_n^-1) mod M \$
+
+Square and multiply
+
+```python
+def exp_func(x, y):
+    exp = bin(y)
+    value = x
+
+    for i in range(3, len(exp)):
+        value = value * value
+        if(exp[i:i+1]=='1'):
+            value = value*x
+    return value
+```
 
 #### Other useful math
 
@@ -2249,3 +2303,436 @@ return $(z)$
 {{< equation >}}
 c = \sum\_{i=0}^{l-1}{c_i2^i}
 {{< /equation >}}
+
+## Primality Testing
+
+- Mainly done by Monte Carlo algos
+  - not error proof but can be reduced
+- Prime number theoreom \$\pi(N) = \frac{N}{1/N}\$
+  - N is some bounds [0,N]
+  - 1024: 710 samples required on average
+- yes biased Monte Carlo algo
+  - yes is always correct, no is not always correct
+  - error \$\epislon\$
+- composite decision problems
+
+### Legendre and Jacobi Symbols
+
+Suppose \$p\$ is an odd prime and \$a\$ is an integer. \$a\$ is a quadratic
+residue modulo \$p\$ if \$ a \nequiv 0 (mod p) \$ and congruence \$y^2 \equiv a (mod p)\$ has
+solution \$y \in Z_p\$. \$a\$ is defined to be quadratic non-residue module \$p\$
+if \$a \nequiv 0 \mod p\$ and \$a\$ is not a quadratic residue of modulo \$p\$
+
+ex. \$Z\_{11}\$ quadratic residue mod 11 is 1,3,4,5, and 9. non residues 2,6,7,8,10.
+
+[wiki](https://en.wikipedia.org/wiki/Jacobi_symbol)
+
+Legendre Symbol
+
+{{< equation >}}
+{\displaystyle \left({\frac {a}{p}}\right)={
+\begin{cases}1&{
+\text{if}}a{\text{ is a quadratic residue modulo }}p{\text{
+and }}a\not \equiv 0{\pmod {p}}, \\
+-1&{\text{if }}a{\text{ is a non-quadratic residue
+modulo }}p, \\
+0&{\text{if }}a\equiv 0{\pmod {p}}.\end{cases}}}
+{{< /equation >}}
+Jacobi Symbol:
+
+\$n = \Pi*{i=1}^{k} p_i^{e_i}\$
+\$(\frac{a}{n} = \Pi*{i=1}^k(\frac{a}{p_i})^e_i)\$
+
+#### Solovay Strassen Algorithm
+
+The Solovay–Strassen primality test is a probabilistic test to determine if a
+number is composite or probably prime. Before diving into the code we will need
+to understand some key terms and concepts to be able to code this algorithm.
+
+O(log n)^2 using 4 properties
+
+```python
+https://www.geeksforgeeks.org/primality-test-set-4-solovay-strassen/
+# Python3 program to implement Solovay-Strassen
+
+# Primality Test
+import random
+
+# modulo function to perform binary
+# exponentiation
+def modulo(base, exponent, mod):
+    x = 1;
+    y = base;
+    while (exponent > 0):
+        if (exponent % 2 == 1):
+            x = (x * y) % mod;
+
+        y = (y * y) % mod;
+        exponent = exponent // 2;
+
+    return x % mod;
+
+# To calculate Jacobian symbol of a
+# given number
+def calculateJacobian(a, n):
+
+    if (a == 0):
+        return 0;# (0/n) = 0
+
+    ans = 1;
+    if (a < 0):
+
+        # (a/n) = (-a/n)*(-1/n)
+        a = -a;
+        if (n % 4 == 3):
+
+            # (-1/n) = -1 if n = 3 (mod 4)
+            ans = -ans;
+
+    if (a == 1):
+        return ans; # (1/n) = 1
+
+    while (a):
+        if (a < 0):
+
+            # (a/n) = (-a/n)*(-1/n)
+            a = -a;
+            if (n % 4 == 3):
+
+                # (-1/n) = -1 if n = 3 (mod 4)
+                ans = -ans;
+
+        while (a % 2 == 0):
+            a = a // 2;
+            if (n % 8 == 3 or n % 8 == 5):
+                ans = -ans;
+
+        # swap
+        a, n = n, a;
+
+        if (a % 4 == 3 and n % 4 == 3):
+            ans = -ans;
+        a = a % n;
+
+        if (a > n // 2):
+            a = a - n;
+
+    if (n == 1):
+        return ans;
+
+    return 0;
+
+'''
+To perform the Solovay- Strassen
+Primality Test
+'''
+def solovoyStrassen(p, iterations):
+
+    if (p < 2):
+        return False;
+    if (p != 2 and p % 2 == 0):
+        return False;
+
+    for i in range(iterations):
+
+        # Generate a random number a
+        a = random.randrange(p - 1) + 1;
+        jacobian = (p + calculateJacobian(a, p)) % p;
+        mod = modulo(a, (p - 1) / 2, p);
+
+        if (jacobian == 0 or mod != jacobian):
+            return False;
+
+    return True;
+
+# Driver Code
+iterations = 50;
+num1 = 15;
+num2 = 13;
+
+if (solovoyStrassen(num1, iterations)):
+    print(num1, "is prime ");
+else:
+    print(num1, "is composite");
+
+if (solovoyStrassen(num2, iterations)):
+    print(num2, "is prime");
+else:
+    print(num2, "is composite");
+```
+
+#### Miller Rabin Algorithm
+
+```python
+# https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/
+# Python3 program Miller-Rabin primality test
+import random
+
+# Utility function to do
+# modular exponentiation.
+# It returns (x^y) % p
+def power(x, y, p):
+
+    # Initialize result
+    res = 1;
+
+    # Update x if it is more than or
+    # equal to p
+    x = x % p;
+    while (y > 0):
+
+        # If y is odd, multiply
+        # x with result
+        if (y & 1):
+            res = (res * x) % p;
+
+        # y must be even now
+        y = y>>1; # y = y/2
+        x = (x * x) % p;
+
+    return res;
+
+# This function is called
+# for all k trials. It returns
+# false if n is composite and
+# returns false if n is
+# probably prime. d is an odd
+# number such that d*2<sup>r</sup> = n-1
+# for some r >= 1
+def miillerTest(d, n):
+
+    # Pick a random number in [2..n-2]
+    # Corner cases make sure that n > 4
+    a = 2 + random.randint(1, n - 4);
+
+    # Compute a^d % n
+    x = power(a, d, n);
+
+    if (x == 1 or x == n - 1):
+        return True;
+
+    # Keep squaring x while one
+    # of the following doesn't
+    # happen
+    # (i) d does not reach n-1
+    # (ii) (x^2) % n is not 1
+    # (iii) (x^2) % n is not n-1
+    while (d != n - 1):
+        x = (x * x) % n;
+        d *= 2;
+
+        if (x == 1):
+            return False;
+        if (x == n - 1):
+            return True;
+
+    # Return composite
+    return False;
+
+# It returns false if n is
+# composite and returns true if n
+# is probably prime. k is an
+# input parameter that determines
+# accuracy level. Higher value of
+# k indicates more accuracy.
+def isPrime( n, k):
+
+    # Corner cases
+    if (n <= 1 or n == 4):
+        return False;
+    if (n <= 3):
+        return True;
+
+    # Find r such that n =
+    # 2^d * r + 1 for some r >= 1
+    d = n - 1;
+    while (d % 2 == 0):
+        d //= 2;
+
+    # Iterate given number of 'k' times
+    for i in range(k):
+        if (miillerTest(d, n) == False):
+            return False;
+
+    return True;
+
+# Driver Code
+# Number of iterations
+k = 4;
+
+print("All primes smaller than 100: ");
+for n in range(1,100):
+    if (isPrime(n, k)):
+        print(n , end=" ");
+```
+
+1. Fermat’s theorem states that, If n is a prime number, then for every a, 1 <= a < n, an-1 % n = 1
+2. Base cases make sure that n must be odd. Since n is odd, n-1 must be even. And an even number can be written as d \* 2s where d is an odd number and s > 0.
+3. From the above two points, for every randomly picked number in the range [2, n-2], the value of ad\*2r % n must be 1.
+4. As per Euclid’s Lemma, if x2 % n = 1 or (x2 – 1) % n = 0 or (x-1)(x+1)% n = 0. Then, for n to be prime, either n divides (x-1) or n divides (x+1). Which means either x % n = 1 or x % n = -1.
+5. ad % n = 1 or ad\*2i % n = -1 if prime
+
+### Square Roots Modulo n
+
+### Factoring Algorithms
+
+- Quadratic Sieve,
+- Elliptic curve factoring algorithm.
+- Number Field Sieve.
+
+#### Pollard p-1 Alogrithm
+
+- pA = f(odd integer n to be factored, bounds B)
+- q | ( p - 1 )
+- ( p -1 ) | B!
+- \$a \equiv 2^{B!}(\mod{n})\$
+- \$a \equiv 2^{B!}(\mod{p})\$
+- \$2^{p-1} \equiv 1\mod{p}\$
+- \$a \equiv 1 (\mod{p})\$
+
+review: fermants theorem: Fermat’s primality test, in number theory, the statement, first given in 1640 by French mathematician Pierre de Fermat, that for any prime number p and any integer a such that p does not divide a (the pair are relatively prime), p divides exactly into \$a^{p} − a\$.
+
+#### Pollard Rho Alogrithm
+
+- Choose map of \$x, x' in \mathbb{Z}\_n\$
+- based on psuedo random numbers
+- iterative approach
+- compare gcd (xj-xk,n)
+- choose a funciton f
+- take f(x) mod n for i
+- check gcd of x - some other f(x)
+- if gcp = n return failure. this is prime.
+- return p
+
+#### Dixon's Random Squares Algorithm
+
+- supposed x is not congruent to += y (mod n) such that x^2 = y2
+- n | (x-y)(x+y)
+- 10^2 \equiv 32 ^2 mod 77
+- gcd(10 + 32, 77) = 7
+- Factor base, B of b smallest primes
+- Step 1: Choose a bound B and identify the factor base (P) of all primes less than or equal to B.
+- Step 2: Search for positive integer z, such that \$z^{2}mod(n)\$ is B-Smooth.
+  \$\begin{equation*}z^{2}\equiv\prod*{p*{i} \in P}p\_{i}^{a^{i}} mod(n)\end{equation*}\$
+- B-Smooth: A positive integer is called B-Smooth if none of its prime factors is greater than B. For example:
+- Step 3: After generating enough of these relations (generally few more than the size of P), we use the method of linear algebra (e.g Gaussian Elimination) to multiply together these relations. Repeat this step until we formed a sufficient number of smooth squares.
+- Step 4: After multiplying all these relations, we get the final equation say:
+  {{< equation >}}
+  a^2 = b^2 mod(N)
+  {{< /equation >}}
+- Step 5: Get GCD
+  {{< equation >}}
+  GCD(a - b, N), GCD(a + b, N)
+  {{< /equation >}}
+
+```python
+# Python 3 implementation of Dixon factorization algo
+# https://www.geeksforgeeks.org/dixons-factorization-method-with-implementation/
+from math import sqrt, gcd
+import numpy as np
+
+# Function to find the factors of a number
+# using the Dixon Factorization Algorithm
+def factor(n):
+
+    # Factor base for the given number
+    base = [2, 3, 5, 7]
+
+    # Starting from the ceil of the root
+    # of the given number N
+    start = int(sqrt(n))
+
+    # Storing the related squares
+    pairs = []
+
+    # For every number from the square root
+    # Till N
+    for i in range(start, n):
+
+        # Finding the related squares
+        for j in range(len(base)):
+            lhs = i**2 % n
+            rhs = base[j]**2 % n
+
+            # If the two numbers are the
+            # related squares, then append
+            # them to the array
+            if(lhs == rhs):
+                pairs.append([i, base[j]])
+
+    new = []
+
+    # For every pair in the array, compute the
+    # GCD such that
+    for i in range(len(pairs)):
+        factor = gcd(pairs[i][0] - pairs[i][1], n)
+
+        # If we find a factor other than 1, then
+        # appending it to the final factor array
+        if(factor != 1):
+            new.append(factor)
+
+    x = np.array(new)
+
+    # Returning the unique factors in the array
+    return(np.unique(x))
+
+# Driver Code
+if __name__ == "__main__":
+    print(factor(23449))
+
+```
+
+#### Factoring Algorithms in Practice
+
+- Quadratic Sieve : fastest
+- Elliptical Curve: when prime factors of n are differing size
+
+### Other attacks on RSA
+
+#### Computing \$\phi(n)\$
+
+- not easier than factoring
+
+#### Decryption Exponent
+
+- computing a is no easier than factoring n
+- if a is revealed, also must choose new modulus
+
+```todo
+
+```
+
+#### Wiener's Low Decryption Exponent Attack
+
+- The attack uses the continued fraction method to expose the private key d when d is small.
+- relies on convergences
+- WAlgorithm(b,n)
+- Compute Euclidean algorithm
+- check convergence
+  if n' is an integer - solve for the roots
+  - return failure
+
+### Rabin Cryptosystem
+
+- secure against chosen plain text attack
+- provided modules n = pq not factored
+- The security of Rabin cryptosystem is related to the difficulty of
+  factorization. It has the advantage over the others that the problem on which
+  it banks has proved to be hard as integer factorization. It has the
+  disadvantage also, that each output of the Rabin function can be generated by
+  any of four possible inputs. if each output is a ciphertext, extra complexity
+  is required on decryption to identify which of the four possible inputs was
+  the true plaintext.
+- Get the public key n.
+- Convert the message to ASCII value. Then convert it to binary and extend the
+  binary value with itself, and change the binary value back to decimal m.
+- Encrypt with the formula:
+- C = m2 mod n
+- Send C to recipient.
+
+#### Security of Rabin Cryptosystem
+
+#### Semantic Security of RSA
+
+#### Partial Information Concerning Plaintext Bits
