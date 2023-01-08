@@ -15,6 +15,120 @@ understand "how do I use this".
 
 <!-- more -->
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
+**Table of Contents**
+
+- [Introduction To Cryptography](#introduction-to-cryptography)
+- [Basic Crypto Systems](#basic-crypto-systems)
+- [Hybrid Cryptography](#hybrid-cryptography)
+- [Message Integrity](#message-integrity)
+- [Message Authentication Codes (MAC)](#message-authentication-codes-mac)
+- [Signature Schemes](#signature-schemes)
+- [Nonrepudiation](#nonrepudiation)
+- [Certificates](#certificates)
+- [Hashing](#hashing)
+- [Cryptographic Protocols](#cryptographic-protocols)
+- [Security](#security)
+- [Notes and References](#notes-and-references)
+- [Classical Cryptography](#classical-cryptography)
+- [Introduction](#introduction)
+- [Shift Cipher](#shift-cipher)
+- [Substitution Cipher](#substitution-cipher)
+- [Affine Cipher](#affine-cipher)
+- [Vigenere Cipher](#vigenere-cipher)
+- [Hill Cipher](#hill-cipher)
+- [Permutations Cipher](#permutations-cipher)
+- [Stream Cipher](#stream-cipher)
+- [Autokey Cipher](#autokey-cipher)
+- [Cryptanalysis](#cryptanalysis)
+- [Affine Cipher](#affine-cipher-1)
+- [Substitution Cipher](#substitution-cipher-1)
+- [Vigenere Cipher](#vigenere-cipher-1)
+- [Hill Cipher](#hill-cipher-1)
+- [LFSR Stream Cipher](#lfsr-stream-cipher)
+- [Notes and References](#notes-and-references-1)
+- [Exercises](#exercises)
+- [Shannon’s Theory, Perfect Secrecy, and the One-Time Pad](#shannons-theory-perfect-secrecy-and-the-one-time-pad)
+- [Introduction](#introduction-1)
+- [Elementary Probability Theory](#elementary-probability-theory)
+- [Perfect Secrecy](#perfect-secrecy)
+- [One Time Pad](#one-time-pad)
+- [Entropy](#entropy)
+- [Properties of Entropy](#properties-of-entropy)
+- [Spurious Keys and Unicity Distance](#spurious-keys-and-unicity-distance)
+- [Notes and References](#notes-and-references-2)
+- [Exercises](#exercises-1)
+- [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
+- [Introduction](#introduction-2)
+- [Substitution-Permutation Networks](#substitution-permutation-networks)
+- [Cryptanalysis](#cryptanalysis-1)
+- [Linear Approximation of S Boxes](#linear-approximation-of-s-boxes)
+- [Linear Attack on SPN](#linear-attack-on-spn)
+- [Differential Crypt Analysis](#differential-crypt-analysis)
+- [Data Encryption Standard (DES)](#data-encryption-standard-des)
+- [Description of DES](#description-of-des)
+- [Advanced Encryption Standard](#advanced-encryption-standard)
+- [Description of AES](#description-of-aes)
+- [Modes of Operation](#modes-of-operation)
+- [Padding Oracle Attack on CBC Mode](#padding-oracle-attack-on-cbc-mode)
+- [Stream Ciphers](#stream-ciphers)
+- [Correlation Atack on Combination Generator](#correlation-atack-on-combination-generator)
+- [Algebric Attack on Filter Generator](#algebric-attack-on-filter-generator)
+- [Trivium](#trivium)
+- [Notes and References](#notes-and-references-3)
+- [Hash Functions and Message Authentication](#hash-functions-and-message-authentication)
+- [Hash Functions and Data Integrity](#hash-functions-and-data-integrity)
+- [Security of a Hash Function](#security-of-a-hash-function)
+- [Random Oracle Model](#random-oracle-model)
+- [Algorithms in the Random Oracle Model](#algorithms-in-the-random-oracle-model)
+- [Iterated Hash Function](#iterated-hash-function)
+- [The Merkle-Damgard Construction](#the-merkle-damgard-construction)
+- [Examples of Iterated Hash Functions](#examples-of-iterated-hash-functions)
+- [Sponge Construction](#sponge-construction)
+- [SHA-3](#sha-3)
+- [Message Authentication Codes](#message-authentication-codes)
+- [Nested MAC and HMAC](#nested-mac-and-hmac)
+- [CBC-MAC](#cbc-mac)
+- [Authentication Encryption](#authentication-encryption)
+- [Unconditionally Secure MACs](#unconditionally-secure-macs)
+- [Strongly Universal Hash Families](#strongly-universal-hash-families)
+- [Optimality of Deception Probabilities](#optimality-of-deception-probabilities)
+- [Notes and References](#notes-and-references-4)
+- [RSA Cryptosystem and Factoring Integers](#rsa-cryptosystem-and-factoring-integers)
+- [Introduction to Public-key Cryptography](#introduction-to-public-key-cryptography)
+- [More number theory](#more-number-theory)
+- [Euclidean Algorithm](#euclidean-algorithm)
+- [Chinese Remainder Theorem](#chinese-remainder-theorem)
+- [Other useful math](#other-useful-math)
+- [RSA Cryptosystem](#rsa-cryptosystem)
+- [Implementing RSA](#implementing-rsa)
+- [Primality Testing](#primality-testing)
+- [Legendre and Jacobi Symbols](#legendre-and-jacobi-symbols)
+- [Solovay Strassen Algorithm](#solovay-strassen-algorithm)
+- [Miller Rabin Algorithm](#miller-rabin-algorithm)
+- [Square Roots Modulo n](#square-roots-modulo-n)
+- [Factoring Algorithms](#factoring-algorithms)
+- [Pollard p-1 Alogrithm](#pollard-p-1-alogrithm)
+- [Pollard Rho Alogrithm](#pollard-rho-alogrithm)
+- [Dixon's Random Squares Algorithm](#dixons-random-squares-algorithm)
+- [Factoring Algorithms in Practice](#factoring-algorithms-in-practice)
+- [Other attacks on RSA](#other-attacks-on-rsa)
+- [Computing \$\phi(n)\$](#computing-phin)
+- [Decryption Exponent](#decryption-exponent)
+- [Wiener's Low Decryption Exponent Attack](#wieners-low-decryption-exponent-attack)
+- [Rabin Cryptosystem](#rabin-cryptosystem)
+- [Security of Rabin Cryptosystem](#security-of-rabin-cryptosystem)
+- [Semantic Security of RSA](#semantic-security-of-rsa)
+- [Partial Information Concerning Plaintext Bits](#partial-information-concerning-plaintext-bits)
+- [Obtaining Semantic Security](#obtaining-semantic-security)
+- [Public Key Cryptography and Discrete Logarithms](#public-key-cryptography-and-discrete-logarithms)
+- [Introduction](#introduction-3)
+- [ElGamal Cryptosystem](#elgamal-cryptosystem)
+- [Algorithms for the Discrete Logarithm Problem](#algorithms-for-the-discrete-logarithm-problem)
+
+<!-- markdown-toc end -->
+
 ## Introduction To Cryptography
 
 ### Basic Crypto Systems
@@ -152,8 +266,13 @@ This method speeds up the drawbacks of slower public-key cryptosystems.
   - padding oracle attack (Vaudenay) uses padding as an attack vector
   - side channel attack : `timing attacks`, `fault analysis attacks`, `power analysis attacks`, and `cache attacks`
 
+#### DSA
+
+![](https://i.imgur.com/EXIMUOv.jpg)
+
 ### Notes and References
 
+- https://asecuritysite.com/dsa/
 - Everyday Cryptography : Fundamental Principles and Applications Keith Martin
 - An Introduction to Mathematical Cryptography : Silverman et. al
 - Introduction to Modern Cryptography : Katz
@@ -2731,8 +2850,482 @@ if __name__ == "__main__":
 - C = m2 mod n
 - Send C to recipient.
 
+**Decrypt**
+
+- Accept C from sender.
+- Specify a and b with Extended Euclidean GCD such that, a.p + b.q = 1
+- Compute r and s using following formula:
+- r = C(p+1)/4 mod p
+- s = C(q+1)/4 mod q
+- Now, calculate X and Y using following formula:
+- X = ( a.p.r + b.q.s ) mod p
+  Y = ( a.p.r – b.q.s ) mod q
+  The four roots are, m1=X, m2=-X, m3=Y, m4=-Y
+  Now, Convert them to binary and divide them all in half.
+  Determine in which the left and right half are same. Keep that binary’s one half and convert it to decimal m. Get the ASCII character for the decimal value m. The resultant character gives the correct message sent by sender.
+
 #### Security of Rabin Cryptosystem
+
+- Turing reduction: \$G \propto_T H \$
+- If there exists pt algorithm to solve H then there ixists one to solve G
+- SOLVEG assumes the existence of an arbitrary algorithm SOLVEH that solves the problem H.
+- SOLVEG can call the algorithm SOLVEH and make use of any values it outputs, but SOLVEG cannot make any assumption about the actual com- putations performed by SOLVEH (in other words, SOLVEH is an oracle that is treated as a “black box”).
+- SOLVEG is a polynomial-time algorithm, when each call to the oracle is regarded as taking O(1) time. (Note that the complexity of SOLVEG takes into account all the computations that are done “outside” the oracle.)
+- SOLVEG correctly solves the problem G.
 
 #### Semantic Security of RSA
 
+- total break: The adversary is able to determine Bob’s private key (in the case of a public- key cryptosystem) or the secret key (in the case of a secret-key cryptosystem). Therefore he can decrypt any ciphertext that has been encrypted using the given key.
+- partial break: With some non-negligible probability, the adversary is able to decrypt a previously unseen ciphertext (without knowing the key). Or, the adversary can determine some specific information about the plaintext, given the ciphertext.
+- distinguishability of ciphertexts: With some probability exceeding 1/2, the adversary is able to distinguish between encryptions of two given plaintexts, or between an encryption of a given plaintext and a random string.
+
 #### Partial Information Concerning Plaintext Bits
+
+- can leak jacobi signal
+
+#### Obtaining Semantic Security
+
+## Public Key Cryptography and Discrete Logarithms
+
+### Introduction
+
+The ElGamal Cryptosystem is based on the Discrete Logarithm problem.
+{{< equation >}}
+\langle\alpha\rangle = \lbrace \alpha^{i} : 0 \leq i \leq n-1 \rbrace
+{{< /equation >}}
+
+- \$\langle\alpha\rangle\$ is a subgroup of G
+- \$\langle\alpha\rangle\$ is a cyclic order of n
+- \$\langle\alpha\rangle\$ is called the subgroup of a
+- that finding discrete logarithms is (probably) difficult, but the inverse
+  operation of exponentiation can be computed efficiently by using the
+  square-and-multiply method
+- Stated another way, exponentiation is a one-way function in suitable groups G.
+
+### ElGamal Cryptosystem
+
+- ElGamal encryption is a public-key cryptosystem. It uses asymmetric key
+  encryption for communicating between two parties and encrypting the message.
+  This cryptosystem is based on the difficulty of finding discrete logarithm in a
+  cyclic group that is even if we know ga and gk, it is extremely difficult to
+  compute gak. Idea of ElGamal cryptosystem
+
+- Suppose Alice wants to communicate with Bob.
+
+1. Bob generates public and private keys:
+
+- Bob chooses a very large number q and a cyclic group Fq.
+- From the cyclic group Fq, he choose any element g and an element a such that
+  gcd(a, q) = 1.
+- Then he computes h = ga.
+- Bob publishes F, h = ga, q, and g as his public key and retains a as private key.
+
+2. Alice encrypts data using Bob’s public key :
+
+- Alice selects an element k from cyclic group F such that gcd(k, q) = 1.
+- Then she computes p = gk and s = hk = gak.
+- She multiples s with M.
+- Then she sends (p, M*s) = (gk, M*s).
+
+3. Bob decrypts the message :
+
+- Bob calculates s′ = pa = gak.
+- He divides M\*s by s′ to obtain M as s = s
+
+https://www.geeksforgeeks.org/elgamal-encryption-algorithm/
+
+```python
+import random
+from math import pow
+
+a = random.randint(2, 10)
+
+def gcd(a, b):
+    if a < b:
+        return gcd(b, a)
+    elif a % b == 0:
+        return b;
+    else:
+        return gcd(b, a % b)
+
+# Generating large random numbers
+def gen_key(q):
+
+    key = random.randint(pow(10, 20), q)
+    while gcd(q, key) != 1:
+        key = random.randint(pow(10, 20), q)
+
+    return key
+
+# Modular exponentiation
+def power(a, b, c):
+    x = 1
+    y = a
+
+    while b > 0:
+        if b % 2 != 0:
+            x = (x * y) % c;
+        y = (y * y) % c
+        b = int(b / 2)
+
+    return x % c
+
+# Asymmetric encryption
+def encrypt(msg, q, h, g):
+
+    en_msg = []
+
+    k = gen_key(q)# Private key for sender
+    s = power(h, k, q)
+    p = power(g, k, q)
+
+    for i in range(0, len(msg)):
+        en_msg.append(msg[i])
+
+    print("g^k used : ", p)
+    print("g^ak used : ", s)
+    for i in range(0, len(en_msg)):
+        en_msg[i] = s * ord(en_msg[i])
+
+    return en_msg, p
+
+def decrypt(en_msg, p, key, q):
+
+    dr_msg = []
+    h = power(p, key, q)
+    for i in range(0, len(en_msg)):
+        dr_msg.append(chr(int(en_msg[i]/h)))
+
+    return dr_msg
+
+# Driver code
+def main():
+
+    msg = 'encryption'
+    print("Original Message :", msg)
+
+    q = random.randint(pow(10, 20), pow(10, 50))
+    g = random.randint(2, q)
+
+    key = gen_key(q)# Private key for receiver
+    h = power(g, key, q)
+    print("g used : ", g)
+    print("g^a used : ", h)
+
+    en_msg, p = encrypt(msg, q, h, g)
+    dr_msg = decrypt(en_msg, p, key, q)
+    dmsg = ''.join(dr_msg)
+    print("Decrypted Message :", dmsg);
+
+
+if __name__ == '__main__':
+    main()
+```
+
+In this cryptosystem, the original message M is masked by multiplying gak to it. To remove the mask, a clue is given in form of gk. Unless someone knows a, he will not be able to retrieve M. This is because finding discrete log in a cyclic group is difficult and simplifying knowing ga and gk is not good enough to compute gak.
+
+```definition
+The ElGamal Public Key Cryptosystem in Zp
+choose p prime in Zp** that is infeasible and let alpha in Z be a primative element.
+let $P = \mathbb{Z}_p$ and $C = \mathbb{Z}_{p} \times \mathbb{Z}_{p}$ . Define:
+
+<br>
+<div align="center" class="equation section">
+$K = \{(p, \alpha, a, \beta) : B \equiv(\mod p)\}$
+</div>
+<br>
+
+$a$ is the private key
+<br>
+<div align="center" class="equation section">
+$e_k(x,y) = (y_1, y_2)$
+</div>
+Secret number $k \in \mathbb{Z}_{p-1}$
+<br>
+where
+<div align="center" class="equation section">
+$y_1 = \alpha^k \mod{p}$
+</div>
+<div align="center" class="equation section">
+$y_2 = x\beta^k \mod{p}$
+</div>
+define:
+<br>
+<div align="center" class="equation section">
+$d_k(y1,y2) =  y_2(y_1^a)^{-1} \mod{p}$
+</div>
+```
+
+- Discrete logarithm of Zp must be infeasible.
+- No polynomial time algo for Discrete Logarithm problem.
+- p generally should have 2048 bits.
+- p-1 should have at least one large prime factor
+
+### Algorithms for the Discrete Logarithm Problem
+
+- Given \$beta \in \alpha\$, find the unique exponent such that \$\alpha^{a} =
+  \beta\$
+- Given \$B\$ perform binary search in order to find a.
+
+#### Shanks Algorithm
+
+1. Construct two lists each of \$\sqrt{n}\$
+2. Searches for a collision
+
+https://www.geeksforgeeks.org/find-square-root-modulo-p-set-2-shanks-tonelli-algorithm/
+
+```python
+# Python3 program to implement Shanks Tonelli
+# algorithm for finding Modular Square Roots
+
+# utility function to find pow(base,
+# exponent) % modulus
+def pow1(base, exponent, modulus):
+
+    result = 1;
+    base = base % modulus;
+    while (exponent > 0):
+        if (exponent % 2 == 1):
+            result = (result * base) % modulus;
+        exponent = int(exponent) >> 1;
+        base = (base * base) % modulus;
+
+    return result;
+
+# utility function to find gcd
+def gcd(a, b):
+    if (b == 0):
+        return a;
+    else:
+        return gcd(b, a % b);
+
+# Returns k such that b^k = 1 (mod p)
+def order(p, b):
+
+    if (gcd(p, b) != 1):
+        print("p and b are not co-prime.\n");
+        return -1;
+
+    # Initializing k with first
+    # odd prime number
+    k = 3;
+    while (True):
+        if (pow1(b, k, p) == 1):
+            return k;
+        k += 1;
+
+# function return p - 1 (= x argument) as
+# x * 2^e, where x will be odd sending e
+# as reference because updation is needed
+# in actual e
+def convertx2e(x):
+    z = 0;
+    while (x % 2 == 0):
+        x = x / 2;
+        z += 1;
+
+    return [x, z];
+
+# Main function for finding the
+# modular square root
+def STonelli(n, p):
+
+    # a and p should be coprime for
+    # finding the modular square root
+    if (gcd(n, p) != 1):
+        print("a and p are not coprime\n");
+        return -1;
+
+    # If below expression return (p - 1) then
+    # modular square root is not possible
+    if (pow1(n, (p - 1) / 2, p) == (p - 1)):
+        print("no sqrt possible\n");
+        return -1;
+
+    # expressing p - 1, in terms of s * 2^e,
+    # where s is odd number
+    ar = convertx2e(p - 1);
+    s = ar[0];
+    e = ar[1];
+
+    # finding smallest q such that
+    # q ^ ((p - 1) / 2) (mod p) = p - 1
+    q = 2;
+    while (True):
+
+        # q - 1 is in place of (-1 % p)
+        if (pow1(q, (p - 1) / 2, p) == (p - 1)):
+            break;
+        q += 1;
+
+    # Initializing variable x, b and g
+    x = pow1(n, (s + 1) / 2, p);
+    b = pow1(n, s, p);
+    g = pow1(q, s, p);
+
+    r = e;
+
+    # keep looping until b become
+    # 1 or m becomes 0
+    while (True):
+        m = 0;
+        while (m < r):
+            if (order(p, b) == -1):
+                return -1;
+
+            # finding m such that b^ (2^m) = 1
+            if (order(p, b) == pow(2, m)):
+                break;
+            m += 1;
+
+        if (m == 0):
+            return x;
+
+        # updating value of x, g and b
+        # according to algorithm
+        x = (x * pow1(g, pow(2, r - m - 1), p)) % p;
+        g = pow1(g, pow(2, r - m), p);
+        b = (b * g) % p;
+
+        if (b == 1):
+            return x;
+        r = m;
+
+# Driver Code
+n = 2;
+
+# p should be prime
+p = 113;
+
+x = STonelli(n, p);
+
+if (x == -1):
+    print("Modular square root is not exist\n");
+else:
+    print("Modular square root of", n,
+          "and", p, "is", x);
+```
+
+**Shanks Algo**
+
+1. \$m \leftarrow \lceil{\sqrt{n}}\rceil\$
+2. \$\text{for} j \leftarrow 0 \text{to} m - 1 $ compute \$\alpha^{mj}\$
+3. Sort the ordered pairs \$(j, a^{mj})\$ with their respective coordinates
+   obtaining \$L_1\$
+4. \$\text{for} i \leftarrow 0 \text{to} m - 1 $ compute \$\beta\alpha^{-i}\$
+5. Sort the ordered pairs \$(i, \beta\alpha^{-i})\$ with their respective coordinates
+   obtaining \$L_2\$
+6. Find pair \$(j,y) \in L_1\$ and \$(i,y) \in L_2\$
+7. \$log\_{\alpha}\beta \leftarrow (mj + i) \mod n\$
+
+#### Pollard Rho Discrete Log Algorithm
+
+https://people.cs.nctu.edu.tw/~rjchen/CNT2016/Pollard_rho_DL.pdf
+
+1. Form seq aplying random looking function
+2. if xi = xj and i < j compute \$log\_{\alpha}\beta\$. Seek collision xi = x2i
+
+{{<equation>}}
+{\displaystyle f(x)={\begin{cases}\beta x&x\in S*{0}\\x^{2}&x\in S*{1}\\\alpha
+x&x\in S\_{2}\end{cases}}}
+{{</equation>}}
+
+{{<equation>}}
+{\displaystyle f(x)={\begin{cases}\beta x, a, b+1&x\in S*{0}\\x^{2}, 2a,2b&x\in S*{1}\\\alpha
+x, a+b, b&x\in S\_{2}\end{cases}}}
+{{</equation>}}
+
+#### Pohlig-Hellman Algorithm
+
+The Pohlig–Hellman algorithm applies to groups whose order is a prime power. The basic idea of this algorithm is to iteratively compute the {\displaystyle p}p-adic digits of the logarithm by repeatedly "shifting out" all but one unknown digit in the exponent, and computing that digit by elementary methods.
+
+1. Initialize \${\displaystyle x*{0}:=0.}{\displaystyle x*{0}:=0.}\$
+2. Compute \${\displaystyle \gamma :=g^{p^{e-1}}}{\displaystyle \gamma :=g^{p^{e-1}}}.\$ By Lagrange's theorem, this element has order \${\displaystyle p}p\$.
+3. For all \${\displaystyle k\in \{0,\dots ,e-1\}}{\displaystyle k\in \{0,\dots ,e-1\}}\$, do:
+   a. Compute {\displaystyle h*{k}:=(g^{-x*{k}}h)^{p^{e-1-k}}}{\displaystyle h*{k}:=(g^{-x*{k}}h)^{p^{e-1-k}}}. By construction, the order of this element must divide {\displaystyle p}p, hence {\displaystyle h*{k}\in \langle \gamma \rangle }{\displaystyle h*{k}\in \langle \gamma \rangle }.
+   b. Using the baby-step giant-step algorithm, compute {\displaystyle d*{k}\in \{0,\dots ,p-1\}}{\displaystyle d*{k}\in \{0,\dots ,p-1\}} such that {\displaystyle \gamma ^{d*{k}}=h*{k}}{\displaystyle \gamma ^{d*{k}}=h*{k}}. It takes time {\displaystyle O({\sqrt {p}})}O({\sqrt p}).
+   c. Set {\displaystyle x*{k+1}:=x*{k}+p^{k}d*{k}}{\displaystyle x*{k+1}:=x*{k}+p^{k}d*{k}}.
+
+#### Index Calculus MethodG
+
+1. Faster than previous methods
+2. uses a factor base ( small primes )
+3. Find logs of B prims in the factor base
+4. Compute the discrete logarithm
+
+### Lower Bounds on the Complexity of the Generic Algorithms
+
+```todo
+revisit
+```
+
+### Finite Fields
+
+1. the multiplicative group of the finite field Fpn
+2. the group of an elliptic curve defined over a finite field.
+
+#### Joux’s Index Calculus for Fields of Small Characteristic
+
+### Elliptical Curves
+
+https://www.youtube.com/watch?v=vnpZXJL6QCQ
+
+- Motivation:
+
+  - find public key exchange with shorter operands
+  - more secure and less space
+  - super compressed and fast
+  - public key cryptosystem that uses larger numbers
+
+- Find another cyclic group
+  - DLP problem must be very hard
+
+#### Elliptic Curves over the Reals
+
+- Non-singular elliptic curve is a set of \$\Epsilon\$ solutions \$(x,y) \in
+  \mathbb{R} \times \mathbb{R}\$
+  {{< equation >}}
+  y^2 = x^3 + ax +b
+  {{</ equation >}}
+  with O as a point at infinity
+- 3 disinct roots
+- Identity element P + O = O + P for all P in E
+- Intersect line 3 points. P, Q and R'
+- \$y = \lambda x + v\$
+- slope of L \$\lambda = \frac{y_2-y_1}{x_2-x_1}\$
+- \$v = y_1 - \lambda x_1 = y_2 - \lambda x_2\$
+- find intersection L and E
+
+```definition
+<div>
+  <img src="https://i.imgur.com/HGPHeqT.png" width="100%">
+  </img>
+</div>
+```
+
+1. If inflection point, R = -P
+2. If p = q then tangent.
+   Group operations
+
+#### Elliptic Curves Modulo a Prime
+
+#### Elliptic Curves over Finit Fields
+
+#### Pairings on Elliptic Curves
+
+#### Properties of Elliptical Curves
+
+An elliptic curve E defined over Fq (where q = pn for p prime,) will have roughly q points on it. More precisely, a well-known theorem due to Hasse asserts that the number of points on E, which we denote by #E, satisfies the following inequality
+q+1−2√q ≤ #E ≤ q+1+2√q.
+
+#### ElGamal On Elliptic Curves
+
+### Discrete Log Algorithms in Practice
+
+### Security of El Gamal Systems
+
+#### Big Security of Discrete Logarithms
+
+#### semantic Security of ElGamal Systems
+
+### Diffie Hellman Problems
